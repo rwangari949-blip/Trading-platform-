@@ -8,11 +8,12 @@ body{margin:0;font-family:Arial;background:#0b1120;color:white}
 header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
 .hero{text-align:center;padding:50px 20px}
 button{padding:14px 24px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:17px;margin:5px}
-.card,.balance,.history{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
+.card,.balance,.history,.chart{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
 #dashboard{display:none;text-align:center;padding:35px 20px}
 input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
 #message{margin:15px;font-weight:bold}
 .price{font-size:24px;font-weight:bold}
+canvas{width:100%;height:220px}
 </style>
 </head>
 
@@ -47,7 +48,12 @@ input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300
 
 <div class="card">
 <h3>USD</h3>
-<div class="price" id="usd">1.00</div>
+<div class="price">1.00</div>
+</div>
+
+<div class="chart">
+<h2>Bitcoin Price Chart</h2>
+<canvas id="chart" width="350" height="220"></canvas>
 </div>
 
 </div>
@@ -85,6 +91,9 @@ input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300
 
 <script>
 
+let btcPrice=67500;
+let prices=[];
+
 function startTrading(){
 document.getElementById("home").style.display="none";
 document.getElementById("dashboard").style.display="block";
@@ -101,8 +110,8 @@ if(amount==="" || amount<=0){
 document.getElementById("message").innerText="Please enter an amount.";
 return;
 }
-document.getElementById("message").innerText="Demo Buy order placed: $" + amount;
-document.getElementById("historyText").innerText="Bought $" + amount;
+document.getElementById("message").innerText="Demo Buy order placed: $"+amount;
+document.getElementById("historyText").innerText="Bought $"+amount;
 }
 
 function sell(){
@@ -111,23 +120,59 @@ if(amount==="" || amount<=0){
 document.getElementById("message").innerText="Please enter an amount.";
 return;
 }
-document.getElementById("message").innerText="Demo Sell order placed: $" + amount;
-document.getElementById("historyText").innerText="Sold $" + amount;
+document.getElementById("message").innerText="Demo Sell order placed: $"+amount;
+document.getElementById("historyText").innerText="Sold $"+amount;
 }
 
 function changePrices(){
-let btc=67500 + Math.floor(Math.random()*1000-500);
-let eth=3500 + Math.floor(Math.random()*100-50);
-let gold=2650 + Math.floor(Math.random()*40-20);
+btcPrice += Math.floor(Math.random()*1000-500);
 
-document.getElementById("btc").innerText="$"+btc.toLocaleString();
+let eth=3500+Math.floor(Math.random()*100-50);
+let gold=2650+Math.floor(Math.random()*40-20);
+
+document.getElementById("btc").innerText="$"+btcPrice.toLocaleString();
 document.getElementById("eth").innerText="$"+eth.toLocaleString();
 document.getElementById("gold").innerText="$"+gold.toLocaleString();
+
+prices.push(btcPrice);
+if(prices.length>20) prices.shift();
+
+drawChart();
 }
 
+function drawChart(){
+let canvas=document.getElementById("chart");
+let ctx=canvas.getContext("2d");
+
+ctx.clearRect(0,0,350,220);
+
+if(prices.length<2)return;
+
+let min=Math.min(...prices);
+let max=Math.max(...prices);
+let range=max-min||1;
+
+ctx.beginPath();
+
+prices.forEach((price,i)=>{
+let x=i*(350/(prices.length-1));
+let y=200-((price-min)/range)*170;
+
+if(i===0)ctx.moveTo(x,y);
+else ctx.lineTo(x,y);
+});
+
+ctx.stroke();
+}
+
+for(let i=0;i<5;i++){
+prices.push(btcPrice+i*50);
+}
+
+drawChart();
 setInterval(changePrices,3000);
 
 </script>
 
 </body>
-</html>
+  </html>
