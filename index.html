@@ -6,12 +6,13 @@
 <style>
 body{margin:0;font-family:Arial;background:#0b1120;color:white}
 header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
-.hero{text-align:center;padding:60px 20px}
+.hero{text-align:center;padding:50px 20px}
 button{padding:14px 24px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:17px;margin:5px}
 .card,.balance,.history{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
 #dashboard{display:none;text-align:center;padding:35px 20px}
 input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
 #message{margin:15px;font-weight:bold}
+.price{font-size:24px;font-weight:bold}
 </style>
 </head>
 
@@ -28,10 +29,27 @@ input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300
 
 <div style="text-align:center">
 <h2>Markets</h2>
-<div class="card">Bitcoin (BTC) — $67,500</div>
-<div class="card">Ethereum (ETH) — $3,500</div>
-<div class="card">Gold — $2,650</div>
-<div class="card">USD — 1.00</div>
+
+<div class="card">
+<h3>Bitcoin (BTC)</h3>
+<div class="price" id="btc">$67,500</div>
+</div>
+
+<div class="card">
+<h3>Ethereum (ETH)</h3>
+<div class="price" id="eth">$3,500</div>
+</div>
+
+<div class="card">
+<h3>Gold</h3>
+<div class="price" id="gold">$2,650</div>
+</div>
+
+<div class="card">
+<h3>USD</h3>
+<div class="price" id="usd">1.00</div>
+</div>
+
 </div>
 </div>
 
@@ -66,6 +84,7 @@ input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300
 </div>
 
 <script>
+
 function startTrading(){
 document.getElementById("home").style.display="none";
 document.getElementById("dashboard").style.display="block";
@@ -95,6 +114,19 @@ return;
 document.getElementById("message").innerText="Demo Sell order placed: $" + amount;
 document.getElementById("historyText").innerText="Sold $" + amount;
 }
+
+function changePrices(){
+let btc=67500 + Math.floor(Math.random()*1000-500);
+let eth=3500 + Math.floor(Math.random()*100-50);
+let gold=2650 + Math.floor(Math.random()*40-20);
+
+document.getElementById("btc").innerText="$"+btc.toLocaleString();
+document.getElementById("eth").innerText="$"+eth.toLocaleString();
+document.getElementById("gold").innerText="$"+gold.toLocaleString();
+}
+
+setInterval(changePrices,3000);
+
 </script>
 
 </body>
