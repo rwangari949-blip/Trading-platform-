@@ -1,19 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TradeFlow</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#0b1120;color:white}
-header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
-.hero{text-align:center;padding:50px 20px}
-button{padding:14px 24px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:17px;margin:5px}
-.card,.balance,.history,.chart{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
-#dashboard{display:none;text-align:center;padding:35px 20px}
-input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
-#message{margin:15px;font-weight:bold}
-.price{font-size:24px;font-weight:bold}
-canvas{width:100%;height:220px}
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0b1220;
+    color:white;
+}
+
+header{
+    background:#111c32;
+    padding:20px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.container{
+    padding:30px 20px;
+    text-align:center;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    margin:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.85;
+}
+
+.market{
+    background:#16233b;
+    margin:12px auto;
+    padding:18px;
+    border-radius:12px;
+    max-width:400px;
+}
+
+.price{
+    font-size:22px;
+    font-weight:bold;
+}
+
+input{
+    padding:12px;
+    margin:8px;
+    width:80%;
+    max-width:300px;
+    border-radius:7px;
+    border:none;
+}
+
+#dashboard,#login{
+    display:none;
+}
+
+.buy{
+    background:#16a34a;
+}
+
+.sell{
+    background:#dc2626;
+}
+
+.message{
+    margin:15px;
+    font-weight:bold;
+}
+
+canvas{
+    background:#111c32;
+    border-radius:10px;
+    margin-top:20px;
+    max-width:100%;
+}
 </style>
 </head>
 
@@ -21,335 +93,326 @@ canvas{width:100%;height:220px}
 
 <header>TradeFlow</header>
 
-<div id="home">
-<div class="hero">
-<h1>Trade Smarter. Trade Better.</h1>
-<p>Explore markets and practice trading with TradeFlow.</p>
-<button onclick="startTrading()">Start Trading</button>
-</div>
+<!-- HOME -->
+<div id="home" class="container">
 
-<div style="text-align:center">
+<h1>Welcome to TradeFlow</h1>
+<p>Your simple demo trading platform.</p>
+
+<button onclick="showLogin()">Login</button>
+<button onclick="showSignup()">Sign Up</button>
+<button onclick="startTrading()">Start Trading</button>
+
 <h2>Markets</h2>
 
-<div class="card">
+<div class="market">
 <h3>Bitcoin (BTC)</h3>
-<div class="price" id="btc">$67,500</div>
+<p class="price" id="btc">$65,000</p>
 </div>
 
-<div class="card">
+<div class="market">
 <h3>Ethereum (ETH)</h3>
-<div class="price" id="eth">$3,500</div>
+<p class="price" id="eth">$3,500</p>
 </div>
 
-<div class="card">
+<div class="market">
 <h3>Gold</h3>
-<div class="price" id="gold">$2,650</div>
+<p class="price" id="gold">$2,500</p>
 </div>
 
-<div class="card">
+<div class="market">
 <h3>USD</h3>
-<div class="price">1.00</div>
+<p class="price">$1.00</p>
 </div>
 
-<div class="chart">
 <h2>Bitcoin Price Chart</h2>
-<canvas id="chart" width="350" height="220"></canvas>
-</div>
+<canvas id="chart" width="350" height="200"></canvas>
 
 </div>
-</div>
 
-<div id="dashboard">
 
-<h1>Trading Dashboard</h1>
-<p>Welcome to TradeFlow</p>
+<!-- LOGIN -->
+<div id="login" class="container">
 
-<div class="balance">
-<h2>Available Balance</h2>
-<h1>$10,000</h1>
-</div>
+<h1>TradeFlow Login</h1>
+<p>Welcome back 👋</p>
 
-<input id="amount" type="number" placeholder="Enter amount">
-
+<input id="username" type="text" placeholder="Enter username">
 <br>
 
-<button onclick="buy()">Buy</button>
-<button onclick="sell()">Sell</button>
-
-<div id="message"></div>
-
-<div class="history">
-<h2>Trade History</h2>
-<p id="historyText">No trades yet.</p>
-</div>
-
+<input id="password" type="password" placeholder="Enter password">
 <br>
+
+<button onclick="login()">Login</button>
+<button onclick="showSignup()">Sign Up</button>
+
+<p id="loginMessage" class="message"></p>
 
 <button onclick="goHome()">Back to Home</button>
 
 </div>
 
-<script>
 
-let btcPrice=67500;
-let prices=[];
+<!-- SIGN UP -->
+<div id="signup" class="container" style="display:none">
 
-function startTrading(){
-document.getElementById("home").style.display="none";
-document.getElementById("dashboard").style.display="block";
-}
+<h1>Create TradeFlow Account</h1>
 
-function goHome(){
-document.getElementById("dashboard").style.display="none";
-document.getElementById("home").style.display="block";
-}
-
-function buy(){
-let amount=document.getElementById("amount").value;
-if(amount==="" || amount<=0){
-document.getElementById("message").innerText="Please enter an amount.";
-return;
-}
-document.getElementById("message").innerText="Demo Buy order placed: $"+amount;
-document.getElementById("historyText").innerText="Bought $"+amount;
-}
-
-function sell(){
-let amount=document.getElementById("amount").value;
-if(amount==="" || amount<=0){
-document.getElementById("message").innerText="Please enter an amount.";
-return;
-}
-document.getElementById("message").innerText="Demo Sell order placed: $"+amount;
-document.getElementById("historyText").innerText="Sold $"+amount;
-}
-
-function changePrices(){
-btcPrice += Math.floor(Math.random()*1000-500);
-
-let eth=3500+Math.floor(Math.random()*100-50);
-let gold=2650+Math.floor(Math.random()*40-20);
-
-document.getElementById("btc").innerText="$"+btcPrice.toLocaleString();
-document.getElementById("eth").innerText="$"+eth.toLocaleString();
-document.getElementById("gold").innerText="$"+gold.toLocaleString();
-
-prices.push(btcPrice);
-if(prices.length>20) prices.shift();
-
-drawChart();
-}
-
-function drawChart(){
-let canvas=document.getElementById("chart");
-let ctx=canvas.getContext("2d");
-
-ctx.clearRect(0,0,350,220);
-
-if(prices.length<2)return;
-
-let min=Math.min(...prices);
-let max=Math.max(...prices);
-let range=max-min||1;
-
-ctx.beginPath();
-
-prices.forEach((price,i)=>{
-let x=i*(350/(prices.length-1));
-let y=200-((price-min)/range)*170;
-
-if(i===0)ctx.moveTo(x,y);
-else ctx.lineTo(x,y);
-});
-
-ctx.stroke();
-}
-
-for(let i=0;i<5;i++){
-prices.push(btcPrice+i*50);
-}
-
-drawChart();
-setInterval(changePrices,3000);
-
-</script>
-
-</<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TradeFlow</title>
-<style>
-body{margin:0;font-family:Arial;background:#0b1120;color:white}
-header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
-.hero{text-align:center;padding:50px 20px}
-button{padding:14px 24px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:17px;margin:5px}
-.card,.balance,.history,.chart{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
-#dashboard{display:none;text-align:center;padding:35px 20px}
-input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
-#message{margin:15px;font-weight:bold}
-.price{font-size:24px;font-weight:bold}
-canvas{width:100%;height:220px}
-</style>
-</head>
-
-<body>
-
-<header>TradeFlow</header>
-
-<div id="home">
-<div class="hero">
-<h1>Trade Smarter. Trade Better.</h1>
-<p>Explore markets and practice trading with TradeFlow.</p>
-<button onclick="startTrading()">Start Trading</button>
-</div>
-
-<div style="text-align:center">
-<h2>Markets</h2>
-
-<div class="card">
-<h3>Bitcoin (BTC)</h3>
-<div class="price" id="btc">$67,500</div>
-</div>
-
-<div class="card">
-<h3>Ethereum (ETH)</h3>
-<div class="price" id="eth">$3,500</div>
-</div>
-
-<div class="card">
-<h3>Gold</h3>
-<div class="price" id="gold">$2,650</div>
-</div>
-
-<div class="card">
-<h3>USD</h3>
-<div class="price">1.00</div>
-</div>
-
-<div class="chart">
-<h2>Bitcoin Price Chart</h2>
-<canvas id="chart" width="350" height="220"></canvas>
-</div>
-
-</div>
-</div>
-
-<div id="dashboard">
-
-<h1>Trading Dashboard</h1>
-<p>Welcome to TradeFlow</p>
-
-<div class="balance">
-<h2>Available Balance</h2>
-<h1>$10,000</h1>
-</div>
-
-<input id="amount" type="number" placeholder="Enter amount">
-
+<input id="newUsername" type="text" placeholder="Choose username">
 <br>
 
-<button onclick="buy()">Buy</button>
-<button onclick="sell()">Sell</button>
-
-<div id="message"></div>
-
-<div class="history">
-<h2>Trade History</h2>
-<p id="historyText">No trades yet.</p>
-</div>
-
+<input id="newPassword" type="password" placeholder="Choose password">
 <br>
+
+<button onclick="createAccount()">Create Account</button>
+<button onclick="showLogin()">Already have an account?</button>
+
+<p id="signupMessage" class="message"></p>
 
 <button onclick="goHome()">Back to Home</button>
 
 </div>
 
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="container">
+
+<h1>Trading Dashboard</h1>
+
+<p>Welcome to TradeFlow</p>
+
+<h2>Available Balance</h2>
+<h2>$10,000</h2>
+
+<input id="amount" type="number" placeholder="Enter amount">
+
+<br>
+
+<button class="buy" onclick="buy()">Buy</button>
+<button class="sell" onclick="sell()">Sell</button>
+
+<p id="tradeMessage" class="message"></p>
+
+<h2>Trade History</h2>
+
+<div id="history">
+<p>No trades yet.</p>
+</div>
+
+<button onclick="goHome()">Back to Home</button>
+
+</div>
+
+
 <script>
 
-let btcPrice=67500;
-let prices=[];
+let trades = [];
 
+/* SHOW LOGIN */
+function showLogin(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("dashboard").style.display="none";
+    document.getElementById("signup").style.display="none";
+    document.getElementById("login").style.display="block";
+}
+
+/* SHOW SIGN UP */
+function showSignup(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("login").style.display="none";
+    document.getElementById("dashboard").style.display="none";
+    document.getElementById("signup").style.display="block";
+}
+
+/* CREATE ACCOUNT */
+function createAccount(){
+
+    let username=document.getElementById("newUsername").value;
+    let password=document.getElementById("newPassword").value;
+
+    if(username==="" || password===""){
+        document.getElementById("signupMessage").innerText=
+        "Please enter username and password.";
+        return;
+    }
+
+    localStorage.setItem("tradeflowUsername",username);
+    localStorage.setItem("tradeflowPassword",password);
+
+    document.getElementById("signupMessage").innerText=
+    "Account created successfully! 🎉";
+
+    setTimeout(showLogin,1000);
+}
+
+/* LOGIN */
+function login(){
+
+    let username=document.getElementById("username").value;
+    let password=document.getElementById("password").value;
+
+    let savedUsername=localStorage.getItem("tradeflowUsername");
+    let savedPassword=localStorage.getItem("tradeflowPassword");
+
+    if(username==="" || password===""){
+        document.getElementById("loginMessage").innerText=
+        "Please enter username and password.";
+        return;
+    }
+
+    if(username===savedUsername && password===savedPassword){
+
+        document.getElementById("login").style.display="none";
+        document.getElementById("dashboard").style.display="block";
+
+        document.getElementById("loginMessage").innerText="";
+
+    }else{
+
+        document.getElementById("loginMessage").innerText=
+        "Incorrect username or password.";
+    }
+}
+
+/* START TRADING */
 function startTrading(){
-document.getElementById("home").style.display="none";
-document.getElementById("dashboard").style.display="block";
+
+    document.getElementById("home").style.display="none";
+    document.getElementById("login").style.display="none";
+    document.getElementById("signup").style.display="none";
+    document.getElementById("dashboard").style.display="block";
+
 }
 
+/* HOME */
 function goHome(){
-document.getElementById("dashboard").style.display="none";
-document.getElementById("home").style.display="block";
+
+    document.getElementById("dashboard").style.display="none";
+    document.getElementById("login").style.display="none";
+    document.getElementById("signup").style.display="none";
+    document.getElementById("home").style.display="block";
+
 }
 
+
+/* BUY */
 function buy(){
-let amount=document.getElementById("amount").value;
-if(amount==="" || amount<=0){
-document.getElementById("message").innerText="Please enter an amount.";
-return;
-}
-document.getElementById("message").innerText="Demo Buy order placed: $"+amount;
-document.getElementById("historyText").innerText="Bought $"+amount;
+
+    let amount=document.getElementById("amount").value;
+
+    if(amount===""){
+        document.getElementById("tradeMessage").innerText=
+        "Please enter an amount.";
+        return;
+    }
+
+    document.getElementById("tradeMessage").innerText=
+    "Demo Buy order placed for $" + amount + " ✅";
+
+    addTrade("BUY",amount);
 }
 
+
+/* SELL */
 function sell(){
-let amount=document.getElementById("amount").value;
-if(amount==="" || amount<=0){
-document.getElementById("message").innerText="Please enter an amount.";
-return;
-}
-document.getElementById("message").innerText="Demo Sell order placed: $"+amount;
-document.getElementById("historyText").innerText="Sold $"+amount;
+
+    let amount=document.getElementById("amount").value;
+
+    if(amount===""){
+        document.getElementById("tradeMessage").innerText=
+        "Please enter an amount.";
+        return;
+    }
+
+    document.getElementById("tradeMessage").innerText=
+    "Demo Sell order placed for $" + amount + " ✅";
+
+    addTrade("SELL",amount);
 }
 
+
+/* TRADE HISTORY */
+function addTrade(type,amount){
+
+    trades.push({
+        type:type,
+        amount:amount,
+        time:new Date().toLocaleTimeString()
+    });
+
+    let history=document.getElementById("history");
+
+    history.innerHTML="";
+
+    trades.forEach(function(trade){
+
+        let item=document.createElement("p");
+
+        item.innerText=
+        trade.type + " — $" + trade.amount +
+        " — " + trade.time;
+
+        history.appendChild(item);
+
+    });
+
+}
+
+
+/* CHANGING PRICES */
 function changePrices(){
-btcPrice += Math.floor(Math.random()*1000-500);
 
-let eth=3500+Math.floor(Math.random()*100-50);
-let gold=2650+Math.floor(Math.random()*40-20);
+    let btcPrice=65000 + Math.floor(Math.random()*1000-500);
+    let ethPrice=3500 + Math.floor(Math.random()*100-50);
+    let goldPrice=2500 + Math.floor(Math.random()*40-20);
 
-document.getElementById("btc").innerText="$"+btcPrice.toLocaleString();
-document.getElementById("eth").innerText="$"+eth.toLocaleString();
-document.getElementById("gold").innerText="$"+gold.toLocaleString();
+    document.getElementById("btc").innerText=
+    "$" + btcPrice.toLocaleString();
 
-prices.push(btcPrice);
-if(prices.length>20) prices.shift();
+    document.getElementById("eth").innerText=
+    "$" + ethPrice.toLocaleString();
 
-drawChart();
+    document.getElementById("gold").innerText=
+    "$" + goldPrice.toLocaleString();
+
 }
 
-function drawChart(){
-let canvas=document.getElementById("chart");
-let ctx=canvas.getContext("2d");
-
-ctx.clearRect(0,0,350,220);
-
-if(prices.length<2)return;
-
-let min=Math.min(...prices);
-let max=Math.max(...prices);
-let range=max-min||1;
-
-ctx.beginPath();
-
-prices.forEach((price,i)=>{
-let x=i*(350/(prices.length-1));
-let y=200-((price-min)/range)*170;
-
-if(i===0)ctx.moveTo(x,y);
-else ctx.lineTo(x,y);
-});
-
-ctx.stroke();
-}
-
-for(let i=0;i<5;i++){
-prices.push(btcPrice+i*50);
-}
-
-drawChart();
 setInterval(changePrices,3000);
+
+
+/* CHART */
+function drawChart(){
+
+    let canvas=document.getElementById("chart");
+    let ctx=canvas.getContext("2d");
+
+    let points=[
+        140,125,150,110,130,
+        95,115,85,100,70,
+        90,60,75,50,65
+    ];
+
+    ctx.beginPath();
+
+    ctx.moveTo(0,points[0]);
+
+    for(let i=1;i<points.length;i++){
+
+        let x=(i/(points.length-1))*canvas.width;
+
+        ctx.lineTo(x,points[i]);
+
+    }
+
+    ctx.strokeStyle="#3b82f6";
+    ctx.lineWidth=3;
+    ctx.stroke();
+
+}
+
+drawChart();
 
 </script>
 
 </body>
-</html>>
-  </html>
+</html>
