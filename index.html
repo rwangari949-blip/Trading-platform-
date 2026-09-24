@@ -1,127 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TradeFlow</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: white;
-    }
-
-    header {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #263247;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .btn {
-      background: #19c37d;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .hero {
-      padding: 70px 25px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 42px;
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      color: #aab4c5;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    .markets {
-      padding: 30px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .market {
-      background: #121c2e;
-      padding: 20px;
-      margin: 12px 0;
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .price {
-      color: #19c37d;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px;
-      color: #77849a;
-    }
-  </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeFlow</title><!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeFlow</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#0b1120;color:white}
+header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
+.hero{text-align:center;padding:60px 20px}
+h1{font-size:42px}
+p{color:#b8c1d1;font-size:18px}
+button{padding:15px 30px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:18px}
+.markets{padding:20px;text-align:center}
+.card{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
+#dashboard{display:none;text-align:center;padding:50px 20px}
+input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
+</style>
 </head>
-
 <body>
 
-  <header>
-    <div class="logo">TradeFlow</div>
-    <a href="#" class="btn">Get Started</a>
-  </header>
+<header>TradeFlow</header>
 
-  <section class="hero">
-    <h1>Trade Smarter. Trade Better.</h1>
-    <p>
-      A modern trading platform designed to help you monitor markets,
-      manage your portfolio and practice trading.
-    </p>
-    <a href="#" class="btn">Start Trading</a>
-  </section>
+<div id="home">
+<section class="hero">
+<h1>Trade Smarter. Trade Better.</h1>
+<p>Explore markets and practice trading with TradeFlow.</p>
+<button onclick="startTrading()">Start Trading</button>
+</section>
 
-  <section class="markets">
-    <h2>Markets</h2>
+<section class="markets">
+<h2>Markets</h2>
+<div class="card">Bitcoin (BTC) — $67,500</div>
+<div class="card">Ethereum (ETH) — $3,500</div>
+<div class="card">Gold — $2,650</div>
+<div class="card">USD — 1.00</div>
+</section>
+</div>
 
-    <div class="market">
-      <span>Bitcoin (BTC)</span>
-      <span class="price">$67,420</span>
-    </div>
+<div id="dashboard">
+<h1>Trading Dashboard</h1>
+<p>Welcome to TradeFlow</p>
+<input placeholder="Enter<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeFlow</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#0b1120;color:white}
+header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
+.hero{text-align:center;padding:60px 20px}
+h1{font-size:42px}
+p{color:#b8c1d1;font-size:18px}
+button{padding:15px 30px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:18px}
+.markets{padding:20px;text-align:center}
+.card{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
+#dashboard{display:none;text-align:center;padding:50px 20px}
+input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
+</style>
+</head>
+<body>
 
-    <div class="market">
-      <span>Ethereum (ETH)</span>
-      <span class="price">$2,580</span>
-    </div>
+<header>TradeFlow</header>
 
-    <div class="market">
-      <span>EUR/USD</span>
-      <span class="price">1.1742</span>
-    </div>
+<div id="home">
+<section class="hero">
+<h1>Trade Smarter. Trade Better.</h1>
+<p>Explore markets and practice trading with TradeFlow.</p>
+<button onclick="startTrading()">Start Trading</button>
+</section>
 
-    <div class="market">
-      <span>Gold</span>
-      <span class="price">$3,745</span>
-    </div>
-  </section>
+<section class="markets">
+<h2>Markets</h2>
+<div class="card">Bitcoin (BTC) — $67,500</div>
+<div class="card">Ethereum (ETH) — $3,500</div>
+<div class="card">Gold — $2,650</div>
+<div class="card">USD — 1.00</div>
+</section>
+</div>
 
-  <footer>
-    © 2026 TradeFlow. Demo trading platform.
-  </footer>
+<div id="dashboard">
+<h1>Trading Dashboard</h1>
+<p>Welcome to TradeFlow</p>
+<input placeholder="Enter amount">
+<br><br>
+<button onclick="alert('Demo trade placed!')">Buy</button>
+<button onclick="alert('Demo trade placed!')">Sell</button>
+<br><br>
+<button onclick="goHome()">Back to Home</button>
+</div>
+
+<script>
+function startTrading(){
+document.getElementById("home").style.display="none";
+document.getElementById("dashboard").style.display="block";
+}
+function goHome(){
+document.getElementById("dashboard").style.display="none";
+document.getElementById("home").style.display="block";
+}
+</script>
+
+</body>
+</html> amount">
+<br><br>
+<button onclick="alert('Demo trade placed!')">Buy</button>
+<button onclick="alert('Demo trade placed!')">Sell</button>
+<br><br>
+<button onclick="goHome()">Back to Home</button>
+</div>
+
+<script>
+function startTrading(){
+document.getElementById("home").style.display="none";
+document.getElementById("dashboard").style.display="block";
+}
+function goHome(){
+document.getElementById("dashboard").style.display="none";
+document.getElementById("home").style.display="block";
+}
+</script>
+
+</body>
+</html>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#0b1120;color:white}
+header{padding:20px;background:#111827;font-size:24px;font-weight:bold;text-align:center}
+.hero{text-align:center;padding:60px 20px}
+h1{font-size:42px}
+p{color:#b8c1d1;font-size:18px}
+button{padding:15px 30px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:18px}
+.markets{padding:20px;text-align:center}
+.card{background:#111827;margin:15px auto;padding:20px;max-width:400px;border-radius:12px}
+#dashboard{display:none;text-align:center;padding:50px 20px}
+input{padding:14px;margin:8px;border-radius:6px;border:0;width:80%;max-width:300px}
+</style>
+</head>
+<body>
+
+<header>TradeFlow</header>
+
+<div id="home">
+<section class="hero">
+<h1>Trade Smarter. Trade Better.</h1>
+<p>Explore markets and practice trading with TradeFlow.</p>
+<button onclick="startTrading()">Start Trading</button>
+</section>
+
+<section class="markets">
+<h2>Markets</h2>
+<div class="card">Bitcoin (BTC) — $67,500</div>
+<div class="card">Ethereum (ETH) — $3,500</div>
+<div class="card">Gold — $2,650</div>
+<div class="card">USD — 1.00</div>
+</section>
+</div>
+
+<div id="dashboard">
+<h1>Trading Dashboard</h1>
+<p>Welcome to TradeFlow</p>
+<input placeholder="Enter amount">
+<br><br>
+<button onclick="alert('Demo trade placed!')">Buy</button>
+<button onclick="alert('Demo trade placed!')">Sell</button>
+<br><br>
+<button onclick="goHome()">Back to Home</button>
+</div>
+
+<script>
+function startTrading(){
+document.getElementById("home").style.display="none";
+document.getElementById("dashboard").style.display="block";
+}
+function goHome(){
+document.getElementById("dashboard").style.display="none";
+document.getElementById("home").style.display="block";
+}
+</script>
 
 </body>
 </html>
