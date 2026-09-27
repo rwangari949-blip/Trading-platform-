@@ -3,1160 +3,1256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TradeFlow</title>
+
+<title>TradeFlow — Trading Platform</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#07111f;
-color:#fff;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,sans-serif;
 }
 
-header{
-background:#0d1b2e;
-padding:18px 25px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:1px solid #20324d;
+body{
+    background:#080b12;
+    color:#fff;
+    min-height:100vh;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    height:70px;
+    background:#0d111a;
+    border-bottom:1px solid #202633;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:sticky;
+    top:0;
+    z-index:20;
 }
 
 .logo{
-font-size:25px;
-font-weight:bold;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-1px;
 }
 
-.status{
-color:#22c55e;
-font-size:13px;
+.logo span{
+    color:#2dd4bf;
 }
 
-.container{
-max-width:1200px;
-margin:auto;
-padding:25px 15px;
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
 }
 
-button{
-border:0;
-border-radius:7px;
-padding:12px 20px;
-color:#fff;
-font-size:15px;
-cursor:pointer;
-margin:4px;
-background:#2563eb;
+.demo-badge{
+    background:#17251f;
+    color:#35e6b0;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
 }
 
-button:hover{opacity:.85}
-
-.buy{background:#16a34a}
-.sell{background:#dc2626}
-
-input,select{
-background:#101f34;
-color:#fff;
-border:1px solid #29415f;
-border-radius:7px;
-padding:12px;
-width:100%;
-margin:6px 0;
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2dd4bf,#6366f1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
 }
 
-.card{
-background:#0e1c30;
-border:1px solid #1d314b;
-border-radius:12px;
-padding:18px;
-margin-bottom:18px;
+/* ================= LAYOUT ================= */
+
+.app{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    min-height:calc(100vh - 70px);
 }
 
-.markets{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:12px;
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    background:#0b0f17;
+    border-right:1px solid #202633;
+    padding:22px 14px;
 }
 
-.market{
-background:#13243b;
-padding:15px;
-border-radius:10px;
-cursor:pointer;
+.menu-title{
+    color:#687386;
+    font-size:11px;
+    text-transform:uppercase;
+    margin:15px 12px 8px;
 }
 
-.market:hover{
-background:#19304e;
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
 }
 
-.price{
-font-size:20px;
-font-weight:bold;
+.menu button{
+    border:0;
+    background:transparent;
+    color:#9aa5b5;
+    padding:13px 14px;
+    border-radius:10px;
+    text-align:left;
+    cursor:pointer;
+    font-size:14px;
 }
 
-.up{color:#22c55e}
-.down{color:#ef4444}
-
-.dashboard-grid{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:18px;
+.menu button:hover,
+.menu button.active{
+    background:#151d29;
+    color:#fff;
 }
+
+.menu button.active{
+    border-left:3px solid #2dd4bf;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    padding:22px;
+    overflow:hidden;
+}
+
+/* ================= TOP STATS ================= */
 
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px;
-margin-bottom:18px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:18px;
 }
 
-.stat{
-background:#0e1c30;
-border:1px solid #1d314b;
-padding:16px;
-border-radius:10px;
+.stat-card{
+    background:#0e131d;
+    border:1px solid #202633;
+    border-radius:14px;
+    padding:18px;
 }
 
-.stat small{
-color:#8fa4bd;
+.stat-label{
+    color:#7f899a;
+    font-size:12px;
+    margin-bottom:8px;
 }
 
-.stat strong{
-display:block;
-font-size:21px;
-margin-top:7px;
+.stat-value{
+    font-size:22px;
+    font-weight:700;
 }
 
-#chart{
-width:100%;
-height:320px;
-background:#091727;
-border-radius:10px;
+.green{
+    color:#31d69c;
+}
+
+.red{
+    color:#ff5b6e;
+}
+
+/* ================= MARKET TICKER ================= */
+
+.ticker{
+    display:flex;
+    gap:12px;
+    overflow:auto;
+    margin-bottom:18px;
+    padding-bottom:3px;
+}
+
+.ticker-card{
+    min-width:155px;
+    background:#0e131d;
+    border:1px solid #202633;
+    border-radius:12px;
+    padding:13px;
+}
+
+.ticker-name{
+    font-size:12px;
+    color:#8993a3;
+}
+
+.ticker-price{
+    margin-top:5px;
+    font-size:17px;
+    font-weight:700;
+}
+
+.ticker-change{
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* ================= TRADING GRID ================= */
+
+.trading-grid{
+    display:grid;
+    grid-template-columns:1fr 330px;
+    gap:18px;
+}
+
+.panel{
+    background:#0e131d;
+    border:1px solid #202633;
+    border-radius:14px;
+    overflow:hidden;
+}
+
+/* ================= CHART ================= */
+
+.chart-header{
+    padding:18px;
+    border-bottom:1px solid #202633;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.asset-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.coin{
+    width:42px;
+    height:42px;
+    background:#171e2a;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    color:#2dd4bf;
+}
+
+.asset-title{
+    font-size:17px;
+    font-weight:700;
+}
+
+.asset-price{
+    color:#31d69c;
+    margin-top:3px;
+    font-size:13px;
+}
+
+.timeframes{
+    display:flex;
+    gap:5px;
+}
+
+.timeframes button{
+    background:#151b27;
+    border:0;
+    color:#8993a3;
+    padding:7px 9px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.timeframes button.active,
+.timeframes button:hover{
+    color:#fff;
+    background:#242d3d;
+}
+
+.chart-area{
+    height:390px;
+    position:relative;
+    padding:12px;
+}
+
+canvas{
+    width:100%;
+    height:100%;
+}
+
+/* ================= ORDER PANEL ================= */
+
+.order-panel{
+    padding:18px;
+}
+
+.order-title{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.order-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-bottom:18px;
+}
+
+.order-tabs button{
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    background:#171d28;
+    color:#a0a9b8;
+    cursor:pointer;
+}
+
+.order-tabs button.buy-tab.active{
+    background:#12352b;
+    color:#31d69c;
+}
+
+.order-tabs button.sell-tab.active{
+    background:#351a20;
+    color:#ff5b6e;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    font-size:11px;
+    color:#7f899a;
+    margin-bottom:7px;
+}
+
+.input{
+    width:100%;
+    background:#080c13;
+    border:1px solid #28303d;
+    border-radius:8px;
+    padding:12px;
+    color:#fff;
+    outline:none;
+}
+
+.input:focus{
+    border-color:#2dd4bf;
+}
+
+.order-summary{
+    background:#101722;
+    border-radius:9px;
+    padding:13px;
+    margin:15px 0;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:12px;
+}
+
+.summary-row:last-child{
+    margin-bottom:0;
+}
+
+.summary-row span:first-child{
+    color:#7f899a;
+}
+
+.trade-button{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:9px;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.trade-button.buy{
+    background:#19a979;
+}
+
+.trade-button.sell{
+    background:#d84459;
+}
+
+.trade-button:hover{
+    opacity:.88;
+}
+
+/* ================= BOTTOM ================= */
+
+.bottom-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:18px;
+}
+
+.section-header{
+    padding:16px 18px;
+    border-bottom:1px solid #202633;
+    display:flex;
+    justify-content:space-between;
+}
+
+.section-header h3{
+    font-size:14px;
+}
+
+.table-wrap{
+    overflow:auto;
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-}
-
-th,td{
-padding:12px 7px;
-text-align:left;
-border-bottom:1px solid #20324b;
-font-size:14px;
+    width:100%;
+    border-collapse:collapse;
 }
 
 th{
-color:#8fa4bd;
+    color:#687386;
+    font-size:10px;
+    text-align:left;
+    padding:12px 18px;
+    text-transform:uppercase;
 }
 
-.green{color:#22c55e}
-.red{color:#ef4444}
-
-.hidden{display:none}
-
-.home{
-text-align:center;
-padding:50px 15px;
+td{
+    padding:13px 18px;
+    border-top:1px solid #181f2b;
+    font-size:12px;
 }
 
-.home h1{
-font-size:42px;
-margin-bottom:10px;
+.asset-cell{
+    font-weight:700;
 }
 
-.home p{
-color:#9db0c8;
+.small{
+    font-size:10px;
+    color:#687386;
+    margin-top:3px;
 }
 
-.message{
-min-height:22px;
-font-size:14px;
+/* ================= WATCHLIST ================= */
+
+.watchlist{
+    margin-top:18px;
 }
 
-@media(max-width:750px){
-.dashboard-grid{
-grid-template-columns:1fr;
+.watch-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 18px;
+    border-bottom:1px solid #181f2b;
 }
 
-.stats{
-grid-template-columns:1fr;
+.watch-item:last-child{
+    border-bottom:0;
 }
 
-.home h1{
-font-size:32px;
+.watch-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
+
+.watch-icon{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#171e2a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.watch-name{
+    font-size:12px;
+}
+
+.watch-symbol{
+    color:#687386;
+    font-size:10px;
+}
+
+.watch-right{
+    text-align:right;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111925;
+    border:1px solid #283342;
+    padding:14px 18px;
+    border-radius:10px;
+    display:none;
+    z-index:100;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+.toast.show{
+    display:block;
+    animation:toast .3s ease;
+}
+
+@keyframes toast{
+    from{
+        transform:translateY(15px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1000px){
+
+    .app{
+        grid-template-columns:70px 1fr;
+    }
+
+    .sidebar{
+        padding:15px 8px;
+    }
+
+    .menu button{
+        font-size:0;
+        text-align:center;
+    }
+
+    .menu button::first-letter{
+        font-size:18px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .trading-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header{
+        padding:0 14px;
+    }
+
+    .demo-badge{
+        display:none;
+    }
+
+    .main{
+        padding:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .stat-card{
+        padding:13px;
+    }
+
+    .stat-value{
+        font-size:17px;
+    }
+
+    .chart-area{
+        height:300px;
+    }
+
+    .bottom-grid{
+        grid-template-columns:1fr;
+    }
+
+    .timeframes button{
+        padding:6px;
+        font-size:10px;
+    }
+
+    .chart-header{
+        padding:13px;
+    }
+
+    .order-panel{
+        padding:14px;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">TradeFlow</div>
-<div class="status">● Market Open</div>
+<!-- HEADER -->
+<header class="header">
+
+    <div class="logo">
+        Trade<span>Flow</span>
+    </div>
+
+    <div class="header-right">
+        <div class="demo-badge">
+            ● DEMO ACCOUNT
+        </div>
+
+        <div class="avatar">
+            TF
+        </div>
+    </div>
+
 </header>
 
 
-<!-- HOME -->
+<div class="app">
 
-<section id="home" class="home">
+<!-- SIDEBAR -->
+<aside class="sidebar">
 
-<h1>TradeFlow</h1>
+    <div class="menu-title">Trading</div>
 
-<p>Trade markets with a realistic demo trading experience.</p>
+    <div class="menu">
 
-<button onclick="openPlatform()">Open Trading Platform</button>
+        <button class="active">📊 Dashboard</button>
 
-<div class="container">
+        <button>📈 Markets</button>
 
-<h2>Markets</h2>
+        <button>💼 Portfolio</button>
 
-<div class="markets">
+        <button>📋 Orders</button>
 
-<div class="market" onclick="selectAsset('BTC')">
-<h3>Bitcoin</h3>
-<div id="homeBTC" class="price">$65,000</div>
+    </div>
+
+
+    <div class="menu-title">Account</div>
+
+    <div class="menu">
+
+        <button>👤 Profile</button>
+
+        <button>⚙ Settings</button>
+
+        <button>🔔 Notifications</button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat-card">
+        <div class="stat-label">Available Balance</div>
+        <div class="stat-value" id="balance">$10,000.00</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-label">Equity</div>
+        <div class="stat-value" id="equity">$10,000.00</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-label">Today's P/L</div>
+        <div class="stat-value green" id="dailyPL">+$0.00</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-label">Open Positions</div>
+        <div class="stat-value" id="positionCount">0</div>
+    </div>
+
+</section>
+
+
+<!-- MARKET TICKER -->
+
+<section class="ticker">
+
+    <div class="ticker-card">
+        <div class="ticker-name">BTC/USD</div>
+        <div class="ticker-price" id="btcTicker">$65,000</div>
+        <div class="ticker-change green">+1.24%</div>
+    </div>
+
+    <div class="ticker-card">
+        <div class="ticker-name">ETH/USD</div>
+        <div class="ticker-price" id="ethTicker">$3,500</div>
+        <div class="ticker-change green">+0.82%</div>
+    </div>
+
+    <div class="ticker-card">
+        <div class="ticker-name">XAU/USD</div>
+        <div class="ticker-price" id="goldTicker">$2,500</div>
+        <div class="ticker-change red">-0.31%</div>
+    </div>
+
+    <div class="ticker-card">
+        <div class="ticker-name">EUR/USD</div>
+        <div class="ticker-price" id="eurTicker">1.0850</div>
+        <div class="ticker-change green">+0.16%</div>
+    </div>
+
+    <div class="ticker-card">
+        <div class="ticker-name">NASDAQ</div>
+        <div class="ticker-price" id="nasdaqTicker">18,250</div>
+        <div class="ticker-change green">+0.42%</div>
+    </div>
+
+</section>
+
+
+<!-- TRADING AREA -->
+
+<section class="trading-grid">
+
+
+<!-- CHART -->
+
+<div class="panel">
+
+    <div class="chart-header">
+
+        <div class="asset-info">
+
+            <div class="coin" id="coinIcon">
+                ₿
+            </div>
+
+            <div>
+                <div class="asset-title" id="assetTitle">
+                    Bitcoin / USD
+                </div>
+
+                <div class="asset-price" id="assetPrice">
+                    $65,000.00
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="timeframes">
+
+            <button>1m</button>
+            <button class="active">5m</button>
+            <button>15m</button>
+            <button>1H</button>
+            <button>1D</button>
+
+        </div>
+
+    </div>
+
+
+    <div class="chart-area">
+
+        <canvas id="chart"></canvas>
+
+    </div>
+
 </div>
 
-<div class="market" onclick="selectAsset('ETH')">
-<h3>Ethereum</h3>
-<div id="homeETH" class="price">$3,500</div>
-</div>
 
-<div class="market" onclick="selectAsset('GOLD')">
-<h3>Gold</h3>
-<div id="homeGOLD" class="price">$2,500</div>
-</div>
+<!-- ORDER PANEL -->
 
-<div class="market" onclick="selectAsset('USD')">
-<h3>USD</h3>
-<div id="homeUSD" class="price">$1.00</div>
-</div>
+<div class="panel">
 
-</div>
+    <div class="order-panel">
+
+        <div class="order-title">
+            Place Order
+        </div>
+
+
+        <div class="order-tabs">
+
+            <button
+                class="buy-tab active"
+                onclick="setSide('buy')"
+                id="buyTab">
+                Buy
+            </button>
+
+            <button
+                class="sell-tab"
+                onclick="setSide('sell')"
+                id="sellTab">
+                Sell
+            </button>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>ASSET</label>
+
+            <select
+                class="input"
+                id="assetSelect"
+                onchange="changeAsset()">
+
+                <option value="BTC">Bitcoin (BTC/USD)</option>
+
+                <option value="ETH">Ethereum (ETH/USD)</option>
+
+                <option value="GOLD">Gold (XAU/USD)</option>
+
+                <option value="EUR">EUR/USD</option>
+
+                <option value="NASDAQ">NASDAQ</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>ORDER TYPE</label>
+
+            <select class="input">
+
+                <option>Market Order</option>
+
+                <option>Limit Order</option>
+
+                <option>Stop Order</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>AMOUNT (USD)</label>
+
+            <input
+                class="input"
+                type="number"
+                id="amount"
+                value="100"
+                min="1">
+
+        </div>
+
+
+        <div class="order-summary">
+
+            <div class="summary-row">
+                <span>Current Price</span>
+                <span id="summaryPrice">$65,000</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Estimated Fee</span>
+                <span id="fee">$0.25</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Order Value</span>
+                <span id="orderValue">$100</span>
+            </div>
+
+        </div>
+
+
+        <button
+            class="trade-button buy"
+            id="tradeButton"
+            onclick="placeTrade()">
+
+            Buy BTC
+
+        </button>
+
+    </div>
 
 </div>
 
 </section>
 
 
-<!-- TRADING PLATFORM -->
+<!-- POSITIONS + HISTORY -->
 
-<section id="platform" class="container hidden">
-
-<div class="stats">
-
-<div class="stat">
-<small>Available Balance</small>
-<strong id="balance">$10,000.00</strong>
-</div>
-
-<div class="stat">
-<small>Portfolio Value</small>
-<strong id="portfolio">$10,000.00</strong>
-</div>
-
-<div class="stat">
-<small>Total P/L</small>
-<strong id="totalPL">$0.00</strong>
-</div>
-
-</div>
+<section class="bottom-grid">
 
 
-<div class="dashboard-grid">
+<!-- POSITIONS -->
+
+<div class="panel">
+
+    <div class="section-header">
+
+        <h3>Open Positions</h3>
+
+        <span id="openCount">0</span>
+
+    </div>
 
 
-<!-- LEFT SIDE -->
+    <div class="table-wrap">
 
-<div>
+        <table>
 
-<div class="card">
+            <thead>
 
-<h2 id="chartTitle">BTC/USD</h2>
+                <tr>
 
-<div>
-Price:
-<strong id="currentPrice">$65,000</strong>
-<span id="priceChange"></span>
-</div>
+                    <th>Asset</th>
+                    <th>Amount</th>
+                    <th>Entry</th>
+                    <th>P/L</th>
 
-<br>
+                </tr>
 
-<canvas id="chart"></canvas>
+            </thead>
 
-</div>
+            <tbody id="positionsBody">
 
+                <tr>
 
-<div class="card">
+                    <td colspan="4"
+                        style="text-align:center;color:#687386">
 
-<h2>Open Positions</h2>
+                        No open positions
 
-<div id="positions">
+                    </td>
 
-<p>No open positions yet.</p>
+                </tr>
 
-</div>
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
 
-<div class="card">
+<!-- HISTORY -->
 
-<h2>Trade History</h2>
+<div class="panel">
 
-<div id="history">
+    <div class="section-header">
 
-<p>No trades yet.</p>
+        <h3>Recent Trades</h3>
 
-</div>
+        <span>History</span>
 
-</div>
-
-</div>
+    </div>
 
 
-<!-- RIGHT SIDE -->
+    <div class="table-wrap">
 
-<div>
+        <table>
 
-<div class="card">
+            <thead>
 
-<h2>Place Trade</h2>
+                <tr>
 
-<label>Market</label>
+                    <th>Asset</th>
+                    <th>Side</th>
+                    <th>Amount</th>
+                    <th>Time</th>
 
-<select id="asset" onchange="changeAsset()">
+                </tr>
 
-<option value="BTC">BTC/USD</option>
-<option value="ETH">ETH/USD</option>
-<option value="GOLD">GOLD/USD</option>
-<option value="USD">USD</option>
+            </thead>
 
-</select>
+            <tbody id="historyBody">
 
-<label>Amount</label>
+                <tr>
 
-<input id="amount" type="number" placeholder="Enter amount">
+                    <td colspan="4"
+                        style="text-align:center;color:#687386">
 
-<br>
+                        No trades yet
 
-<button class="buy" onclick="buy()">BUY</button>
+                    </td>
 
-<button class="sell" onclick="sell()">SELL</button>
+                </tr>
 
-<p id="message" class="message"></p>
+            </tbody>
 
-</div>
+        </table>
 
-
-<div class="card">
-
-<h2>Market Prices</h2>
-
-<p>BTC/USD <strong id="sideBTC">$65,000</strong></p>
-
-<p>ETH/USD <strong id="sideETH">$3,500</strong></p>
-
-<p>GOLD/USD <strong id="sideGOLD">$2,500</strong></p>
-
-<p>USD <strong>$1.00</strong></p>
-
-</div>
-
-<button onclick="goHome()">← Back Home</button>
-
-</div>
+    </div>
 
 </div>
 
 </section>
+
+
+<!-- WATCHLIST -->
+
+<section class="panel watchlist">
+
+    <div class="section-header">
+
+        <h3>Market Watchlist</h3>
+
+        <span>Live</span>
+
+    </div>
+
+
+    <div class="watch-item">
+
+        <div class="watch-left">
+
+            <div class="watch-icon">₿</div>
+
+            <div>
+                <div class="watch-name">Bitcoin</div>
+                <div class="watch-symbol">BTC/USD</div>
+            </div>
+
+        </div>
+
+        <div class="watch-right">
+
+            <div id="watchBTC">$65,000</div>
+
+            <div class="green">+1.24%</div>
+
+        </div>
+
+    </div>
+
+
+    <div class="watch-item">
+
+        <div class="watch-left">
+
+            <div class="watch-icon">Ξ</div>
+
+            <div>
+                <div class="watch-name">Ethereum</div>
+                <div class="watch-symbol">ETH/USD</div>
+            </div>
+
+        </div>
+
+        <div class="watch-right">
+
+            <div id="watchETH">$3,500</div>
+
+            <div class="green">+0.82%</div>
+
+        </div>
+
+    </div>
+
+
+    <div class="watch-item">
+
+        <div class="watch-left">
+
+            <div class="watch-icon">Au</div>
+
+            <div>
+                <div class="watch-name">Gold</div>
+                <div class="watch-symbol">XAU/USD</div>
+            </div>
+
+        </div>
+
+        <div class="watch-right">
+
+            <div id="watchGOLD">$2,500</div>
+
+            <div class="red">-0.31%</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<div class="toast" id="toast">
+    Order placed successfully.
+</div>
 
 
 <script>
 
-/* =========================
-   MARKET DATA
-========================= */
+/* ================= MARKET DATA ================= */
 
-let prices={
-BTC:65000,
-ETH:3500,
-GOLD:2500,
-USD:1
+const prices = {
+
+    BTC:65000,
+    ETH:3500,
+    GOLD:2500,
+    EUR:1.0850,
+    NASDAQ:18250
+
 };
 
-let previousPrices={
-BTC:65000,
-ETH:3500,
-GOLD:2500,
-USD:1
+
+const names = {
+
+    BTC:"Bitcoin / USD",
+    ETH:"Ethereum / USD",
+    GOLD:"Gold / USD",
+    EUR:"EUR / USD",
+    NASDAQ:"NASDAQ"
+
 };
 
-let balance=10000;
 
-let positions={};
+const icons = {
 
-let history=[];
+    BTC:"₿",
+    ETH:"Ξ",
+    GOLD:"Au",
+    EUR:"€",
+    NASDAQ:"N"
 
-let selectedAsset="BTC";
-
-let chartData=[];
-
-
-/* =========================
-   OPEN PLATFORM
-========================= */
-
-function openPlatform(){
-
-document.getElementById("home").classList.add("hidden");
-
-document.getElementById("platform").classList.remove("hidden");
-
-selectAsset("BTC");
-
-}
+};
 
 
-/* =========================
-   HOME
-========================= */
+let selectedAsset = "BTC";
 
-function goHome(){
+let side = "buy";
 
-document.getElementById("platform").classList.add("hidden");
+let balance = 10000;
 
-document.getElementById("home").classList.remove("hidden");
+let positions = {};
 
-}
+let history = [];
+
+let chartData = [];
 
 
-/* =========================
-   SELECT ASSET
-========================= */
+/* ================= FORMAT ================= */
 
-function selectAsset(asset){
+function money(value){
 
-selectedAsset=asset;
-
-document.getElementById("asset").value=asset;
-
-updateTradingScreen();
+    return "$" + Number(value).toLocaleString(
+        "en-US",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
 
 }
 
 
-/* =========================
-   CHANGE ASSET
-========================= */
+/* ================= ASSET ================= */
 
 function changeAsset(){
 
-selectedAsset=
-document.getElementById("asset").value;
+    selectedAsset =
+        document.getElementById("assetSelect").value;
 
-updateTradingScreen();
-
-}
-
-
-/* =========================
-   UPDATE SCREEN
-========================= */
-
-function updateTradingScreen(){
-
-let price=prices[selectedAsset];
-
-document.getElementById("chartTitle").innerText=
-selectedAsset+"/USD";
-
-document.getElementById("currentPrice").innerText=
-formatMoney(price);
-
-if(!chartData.length){
-
-for(let i=0;i<30;i++){
-
-chartData.push(price);
-
-}
-
-}else{
-
-chartData.push(price);
-
-if(chartData.length>40){
-
-chartData.shift();
-
-}
-
-}
-
-drawChart();
+    updateAssetUI();
 
 }
 
 
-/* =========================
-   BUY
-========================= */
+function updateAssetUI(){
 
-function buy(){
+    const price = prices[selectedAsset];
 
-let amount=parseFloat(
-document.getElementById("amount").value
-);
+    document.getElementById("assetTitle")
+        .innerText = names[selectedAsset];
 
-if(!amount || amount<=0){
+    document.getElementById("assetPrice")
+        .innerText =
+        selectedAsset === "EUR"
+        ? price.toFixed(4)
+        : money(price);
 
-showMessage("Enter a valid amount.");
+    document.getElementById("summaryPrice")
+        .innerText =
+        selectedAsset === "EUR"
+        ? price.toFixed(4)
+        : money(price);
 
-return;
+    document.getElementById("coinIcon")
+        .innerText = icons[selectedAsset];
 
-}
+    document.getElementById("tradeButton")
+        .innerText =
+        (side === "buy" ? "Buy " : "Sell ")
+        + selectedAsset;
 
-if(amount>balance){
-
-showMessage("Insufficient demo balance.");
-
-return;
-
-}
-
-let asset=selectedAsset;
-
-let price=prices[asset];
-
-let quantity=amount/price;
-
-
-balance-=amount;
-
-
-if(!positions[asset]){
-
-positions[asset]={
-asset:asset,
-quantity:0,
-invested:0,
-averagePrice:0
-};
+    createChart();
 
 }
 
 
-let position=positions[asset];
+/* ================= BUY / SELL ================= */
 
-let totalCost=
-(position.quantity*position.averagePrice)+amount;
+function setSide(newSide){
 
-position.quantity+=quantity;
+    side = newSide;
 
-position.invested+=amount;
+    const buyTab =
+        document.getElementById("buyTab");
 
-position.averagePrice=
-totalCost/position.quantity;
+    const sellTab =
+        document.getElementById("sellTab");
 
+    const button =
+        document.getElementById("tradeButton");
 
-history.unshift({
+    buyTab.classList.remove("active");
 
-type:"BUY",
-asset:asset,
-amount:amount,
-price:price,
-quantity:quantity,
-time:new Date().toLocaleTimeString()
+    sellTab.classList.remove("active");
 
-});
+    if(side === "buy"){
 
+        buyTab.classList.add("active");
 
-showMessage(
-"BUY "+asset+" executed at "+
-formatMoney(price)+" ✓"
-);
+        button.className =
+            "trade-button buy";
 
-document.getElementById("amount").value="";
+    }else{
 
-updateAll();
+        sellTab.classList.add("active");
 
-}
+        button.className =
+            "trade-button sell";
 
+    }
 
-/* =========================
-   SELL
-========================= */
-
-function sell(){
-
-let amount=parseFloat(
-document.getElementById("amount").value
-);
-
-if(!amount || amount<=0){
-
-showMessage("Enter a valid amount.");
-
-return;
-
-}
-
-let asset=selectedAsset;
-
-if(!positions[asset] ||
-positions[asset].quantity<=0){
-
-showMessage(
-"No "+asset+" position to sell."
-);
-
-return;
-
-}
-
-let price=prices[asset];
-
-let position=positions[asset];
-
-let quantityToSell=amount/price;
-
-if(quantityToSell>position.quantity){
-
-quantityToSell=position.quantity;
-
-amount=quantityToSell*price;
-
-}
-
-
-let costBasis=
-quantityToSell*position.averagePrice;
-
-let profit=
-amount-costBasis;
-
-
-balance+=amount;
-
-position.quantity-=quantityToSell;
-
-position.invested-=costBasis;
-
-
-if(position.quantity<0.00000001){
-
-delete positions[asset];
-
-}
-
-
-history.unshift({
-
-type:"SELL",
-asset:asset,
-amount:amount,
-price:price,
-quantity:quantityToSell,
-profit:profit,
-time:new Date().toLocaleTimeString()
-
-});
-
-
-showMessage(
-"SELL "+asset+" executed at "+
-formatMoney(price)+" ✓"
-);
-
-document.getElementById("amount").value="";
-
-updateAll();
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-function showMessage(message){
-
-document.getElementById("message").innerText=
-message;
-
-}
-
-
-/* =========================
-   UPDATE EVERYTHING
-========================= */
-
-function updateAll(){
-
-updateBalance();
-
-updatePortfolio();
-
-updatePositions();
-
-updateHistory();
-
-updateMarketPrices();
-
-}
-
-
-/* =========================
-   BALANCE
-========================= */
-
-function updateBalance(){
-
-document.getElementById("balance").innerText=
-formatMoney(balance);
-
-}
-
-
-/* =========================
-   PORTFOLIO
-========================= */
-
-function updatePortfolio(){
-
-let portfolio=balance;
-
-let totalPL=0;
-
-
-Object.values(positions).forEach(function(position){
-
-let currentValue=
-position.quantity*prices[position.asset];
-
-portfolio+=currentValue;
-
-let pl=
-currentValue-position.invested;
-
-totalPL+=pl;
-
-});
-
-
-history.forEach(function(trade){
-
-if(trade.type==="SELL"){
-
-totalPL+=trade.profit || 0;
-
-}
-
-});
-
-
-document.getElementById("portfolio").innerText=
-formatMoney(portfolio);
-
-
-let plElement=
-document.getElementById("totalPL");
-
-plElement.innerText=
-formatMoney(totalPL);
-
-plElement.className=
-totalPL>=0 ? "green":"red";
-
-}
-
-
-/* =========================
-   POSITIONS
-========================= */
-
-function updatePositions(){
-
-let box=
-document.getElementById("positions");
-
-let keys=Object.keys(positions);
-
-
-if(keys.length===0){
-
-box.innerHTML=
-"<p>No open positions yet.</p>";
-
-return;
-
-}
-
-
-let html="";
-
-
-keys.forEach(function(asset){
-
-let position=positions[asset];
-
-let currentValue=
-position.quantity*prices[asset];
-
-let pl=
-currentValue-position.invested;
-
-let percent=
-position.invested>0
-?(pl/position.invested)*100
-:0;
-
-
-html+=`
-
-<div class="card">
-
-<strong>${asset}</strong>
-
-<p>Quantity:
-${position.quantity.toFixed(6)}
-</p>
-
-<p>Entry Price:
-${formatMoney(position.averagePrice)}
-</p>
-
-<p>Current Price:
-${formatMoney(prices[asset])}
-</p>
-
-<p>Value:
-${formatMoney(currentValue)}
-</p>
-
-<p class="${pl>=0?'green':'red'}">
-
-P/L:
-${formatMoney(pl)}
-(${percent.toFixed(2)}%)
-
-</p>
-
-</div>
-
-`;
-
-});
-
-
-box.innerHTML=html;
-
-}
-
-
-/* =========================
-   HISTORY
-========================= */
-
-function updateHistory(){
-
-let box=
-document.getElementById("history");
-
-
-if(history.length===0){
-
-box.innerHTML=
-"<p>No trades yet.</p>";
-
-return;
-
-}
-
-
-let html=`
-
-<table>
-
-<tr>
-
-<th>Type</th>
-<th>Asset</th>
-<th>Amount</th>
-<th>Price</th>
-<th>Time</th>
-
-</tr>
-
-`;
-
-
-history.slice(0,20).forEach(function(trade){
-
-html+=`
-
-<tr>
-
-<td class="${trade.type==="BUY"?"green":"red"}">
-${trade.type}
-</td>
-
-<td>${trade.asset}</td>
-
-<td>${formatMoney(trade.amount)}</td>
-
-<td>${formatMoney(trade.price)}</td>
-
-<td>${trade.time}</td>
-
-</tr>
-
-`;
-
-});
-
-
-html+="</table>";
-
-box.innerHTML=html;
-
-}
-
-
-/* =========================
-   MARKET PRICES
-========================= */
-
-function updateMarketPrices(){
-
-document.getElementById("sideBTC").innerText=
-formatMoney(prices.BTC);
-
-document.getElementById("sideETH").innerText=
-formatMoney(prices.ETH);
-
-document.getElementById("sideGOLD").innerText=
-formatMoney(prices.GOLD);
-
-
-document.getElementById("homeBTC").innerText=
-formatMoney(prices.BTC);
-
-document.getElementById("homeETH").innerText=
-formatMoney(prices.ETH);
-
-document.getElementById("homeGOLD").innerText=
-formatMoney(prices.GOLD);
-
-
-let current=prices[selectedAsset];
-
-let previous=previousPrices[selectedAsset];
-
-let change=current-previous;
-
-let changeElement=
-document.getElementById("priceChange");
-
-
-if(change>0){
-
-changeElement.innerText=
-" ▲ "+formatMoney(change);
-
-changeElement.className="up";
-
-}else if(change<0){
-
-changeElement.innerText=
-" ▼ "+formatMoney(Math.abs(change));
-
-changeElement.className="down";
-
-}else{
-
-changeElement.innerText="";
-
-}
-
-}
-
-
-/* =========================
-   MOVING MARKET
-========================= */
-
-function moveMarkets(){
-
-previousPrices={
-BTC:prices.BTC,
-ETH:prices.ETH,
-GOLD:prices.GOLD,
-USD:prices.USD
-};
-
-
-prices.BTC+=
-(Math.random()-0.5)*700;
-
-prices.ETH+=
-(Math.random()-0.5)*50;
-
-prices.GOLD+=
-(Math.random()-0.5)*25;
-
-
-prices.BTC=Math.max(1000,prices.BTC);
-
-prices.ETH=Math.max(100,prices.ETH);
-
-prices.GOLD=Math.max(500,prices.GOLD);
-
-
-updateTradingScreen();
-
-updateAll();
-
-}
-
-
-setInterval(moveMarkets,2000);
-
-
-/* =========================
-   CHART
-========================= */
-
-function drawChart(){
-
-let canvas=
-document.getElementById("chart");
-
-let rect=
-canvas.getBoundingClientRect();
-
-let width=
-canvas.clientWidth;
-
-let height=
-canvas.clientHeight;
-
-
-let dpr=window.devicePixelRatio||1;
-
-canvas.width=width*dpr;
-
-canvas.height=height*dpr;
-
-let ctx=canvas.getContext("2d");
-
-ctx.scale(dpr,dpr);
-
-
-if(chartData.length<2)return;
-
-
-let min=Math.min(...chartData);
-
-let max=Math.max(...chartData);
-
-let range=max-min;
-
-if(range===0)range=1;
-
-
-ctx.beginPath();
-
-
-chartData.forEach(function(value,index){
-
-let x=
-(index/(chartData.length-1))*width;
-
-let y=
-height-
-((value-min)/range)*(height-30)-15;
-
-
-if(index===0){
-
-ctx.moveTo(x,y);
-
-}else{
-
-ctx.lineTo(x,y);
-
-}
-
-});
-
-
-ctx.strokeStyle="#3b82f6";
-
-ctx.lineWidth=3;
-
-ctx.stroke();
-
-
-/* current price dot */
-
-let last=chartData[chartData.length-1];
-
-let x=width;
-
-let y=
-height-
-((last-min)/range)*(height-30)-15;
-
-
-ctx.beginPath();
-
-ctx.arc(x,y,5,0,Math.PI*2);
-
-ctx.fillStyle="#22c55e";
-
-ctx.fill();
-
-}
-
-
-/* =========================
-   MONEY FORMAT
-========================= */
-
-function formatMoney(number){
-
-return "$"+
-Number(number).toLocaleString(
-"en-US",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-);
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-updateAll();
-
-selectAsset("BTC");
-
-window.addEventListener(
-"resize",
-drawChart
-);
-
-</script>
-
-</body>
-    </html>
+    button.innerText =
+           
