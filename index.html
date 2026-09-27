@@ -2,1257 +2,942 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TradeFlow — Trading Platform</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TradeFlow</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Inter,Arial,sans-serif;
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+body{background:#070b12;color:#fff;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+:root{
+ --bg:#070b12;
+ --panel:#0e141e;
+ --panel2:#121a26;
+ --border:#202b39;
+ --text:#f5f7fa;
+ --muted:#7e8a9d;
+ --green:#22c997;
+ --red:#ff5368;
+ --accent:#36d6b0;
 }
 
-body{
-    background:#080b12;
-    color:#fff;
-    min-height:100vh;
+/* AUTH */
+.auth{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:
+ radial-gradient(circle at 20% 20%,rgba(54,214,176,.12),transparent 30%),
+ radial-gradient(circle at 80% 80%,rgba(75,91,255,.12),transparent 30%),
+ var(--bg);
 }
 
-/* ================= HEADER ================= */
+.auth-card{
+ width:100%;
+ max-width:430px;
+ background:rgba(14,20,30,.95);
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:32px;
+ box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
 
+.brand{
+ text-align:center;
+ font-size:29px;
+ font-weight:800;
+ margin-bottom:8px;
+}
+.brand span{color:var(--accent)}
+.auth-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:28px}
+
+.auth-tabs{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:6px;
+ background:#090e16;
+ padding:5px;
+ border-radius:10px;
+ margin-bottom:22px;
+}
+.auth-tabs button{
+ border:0;background:transparent;color:var(--muted);
+ padding:11px;border-radius:7px;
+}
+.auth-tabs button.active{background:#1a2533;color:#fff}
+
+.field{margin-bottom:15px}
+.field label{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin-bottom:7px;
+ text-transform:uppercase;
+}
+.input{
+ width:100%;
+ padding:13px;
+ background:#090e16;
+ color:#fff;
+ border:1px solid var(--border);
+ border-radius:9px;
+ outline:none;
+}
+.input:focus{border-color:var(--accent)}
+
+.primary{
+ width:100%;
+ border:0;
+ padding:14px;
+ border-radius:9px;
+ background:var(--accent);
+ color:#06120f;
+ font-weight:800;
+ margin-top:4px;
+}
+.primary:hover{opacity:.9}
+
+.auth-link{
+ background:none;
+ border:0;
+ color:var(--accent);
+ font-size:12px;
+ margin-top:17px;
+ width:100%;
+}
+
+.message{
+ margin-top:15px;
+ font-size:12px;
+ text-align:center;
+ color:var(--muted);
+ min-height:16px;
+}
+
+/* APP */
+.app{display:none;min-height:100vh}
 .header{
-    height:70px;
-    background:#0d111a;
-    border-bottom:1px solid #202633;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 25px;
-    position:sticky;
-    top:0;
-    z-index:20;
+ height:68px;
+ background:#0b1018;
+ border-bottom:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 22px;
+ position:sticky;
+ top:0;
+ z-index:30;
 }
-
-.logo{
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:-1px;
+.logo{font-size:22px;font-weight:800}
+.logo span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:15px}
+.demo{
+ color:var(--green);
+ background:#10261f;
+ border:1px solid #194b3c;
+ padding:6px 10px;
+ border-radius:20px;
+ font-size:10px;
 }
-
-.logo span{
-    color:#2dd4bf;
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-.demo-badge{
-    background:#17251f;
-    color:#35e6b0;
-    padding:7px 12px;
-    border-radius:20px;
-    font-size:12px;
-}
-
 .avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#2dd4bf,#6366f1);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
+ width:36px;height:36px;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(135deg,#36d6b0,#5266ff);
+ font-size:11px;font-weight:800;
 }
 
-/* ================= LAYOUT ================= */
-
-.app{
-    display:grid;
-    grid-template-columns:220px 1fr;
-    min-height:calc(100vh - 70px);
-}
-
-/* ================= SIDEBAR ================= */
-
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 68px)}
 .sidebar{
-    background:#0b0f17;
-    border-right:1px solid #202633;
-    padding:22px 14px;
+ background:#090e16;
+ border-right:1px solid var(--border);
+ padding:18px 12px;
 }
-
 .menu-title{
-    color:#687386;
-    font-size:11px;
-    text-transform:uppercase;
-    margin:15px 12px 8px;
+ color:#596678;
+ font-size:10px;
+ text-transform:uppercase;
+ padding:15px 11px 7px;
 }
-
-.menu{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-}
-
 .menu button{
-    border:0;
-    background:transparent;
-    color:#9aa5b5;
-    padding:13px 14px;
-    border-radius:10px;
-    text-align:left;
-    cursor:pointer;
-    font-size:14px;
+ display:block;width:100%;
+ background:transparent;border:0;
+ color:#8d99aa;text-align:left;
+ padding:12px;border-radius:9px;
+ margin-bottom:4px;
+ font-size:13px;
 }
-
-.menu button:hover,
-.menu button.active{
-    background:#151d29;
-    color:#fff;
+.menu button:hover,.menu button.active{
+ background:#141e2a;color:#fff;
 }
+.menu button.active{border-left:3px solid var(--accent)}
 
-.menu button.active{
-    border-left:3px solid #2dd4bf;
+.main{padding:20px;overflow:hidden}
+
+/* TOP */
+.welcome{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:18px;
 }
-
-/* ================= MAIN ================= */
-
-.main{
-    padding:22px;
-    overflow:hidden;
-}
-
-/* ================= TOP STATS ================= */
+.welcome h1{font-size:22px}
+.welcome p{color:var(--muted);font-size:12px;margin-top:5px}
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-    margin-bottom:18px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
+ margin-bottom:15px;
 }
-
-.stat-card{
-    background:#0e131d;
-    border:1px solid #202633;
-    border-radius:14px;
-    padding:18px;
+.stat{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:16px;
 }
+.stat label{font-size:10px;color:var(--muted)}
+.stat strong{display:block;font-size:21px;margin-top:8px}
+.green{color:var(--green)!important}
+.red{color:var(--red)!important}
 
-.stat-label{
-    color:#7f899a;
-    font-size:12px;
-    margin-bottom:8px;
-}
-
-.stat-value{
-    font-size:22px;
-    font-weight:700;
-}
-
-.green{
-    color:#31d69c;
-}
-
-.red{
-    color:#ff5b6e;
-}
-
-/* ================= MARKET TICKER ================= */
-
+/* MARKET */
 .ticker{
-    display:flex;
-    gap:12px;
-    overflow:auto;
-    margin-bottom:18px;
-    padding-bottom:3px;
+ display:flex;gap:10px;overflow:auto;
+ margin-bottom:15px;
 }
-
 .ticker-card{
-    min-width:155px;
-    background:#0e131d;
-    border:1px solid #202633;
-    border-radius:12px;
-    padding:13px;
+ min-width:150px;
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:11px;
+ padding:12px;
 }
+.ticker-name{font-size:10px;color:var(--muted)}
+.ticker-price{font-size:16px;font-weight:700;margin-top:5px}
+.ticker-change{font-size:10px;margin-top:4px}
 
-.ticker-name{
-    font-size:12px;
-    color:#8993a3;
+/* TRADING */
+.trading{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) 320px;
+ gap:15px;
 }
-
-.ticker-price{
-    margin-top:5px;
-    font-size:17px;
-    font-weight:700;
-}
-
-.ticker-change{
-    font-size:11px;
-    margin-top:4px;
-}
-
-/* ================= TRADING GRID ================= */
-
-.trading-grid{
-    display:grid;
-    grid-template-columns:1fr 330px;
-    gap:18px;
-}
-
 .panel{
-    background:#0e131d;
-    border:1px solid #202633;
-    border-radius:14px;
-    overflow:hidden;
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:14px;
+ overflow:hidden;
 }
-
-/* ================= CHART ================= */
-
-.chart-header{
-    padding:18px;
-    border-bottom:1px solid #202633;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.chart-head{
+ padding:15px;
+ border-bottom:1px solid var(--border);
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
 }
-
-.asset-info{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.asset{
+ display:flex;align-items:center;gap:10px;
 }
-
-.coin{
-    width:42px;
-    height:42px;
-    background:#171e2a;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-    color:#2dd4bf;
+.asset-icon{
+ width:38px;height:38px;border-radius:50%;
+ background:#17212e;
+ display:flex;align-items:center;justify-content:center;
+ color:var(--accent);font-weight:800;
 }
-
-.asset-title{
-    font-size:17px;
-    font-weight:700;
+.asset-name{font-size:14px;font-weight:700}
+.asset-price{font-size:11px;color:var(--green);margin-top:3px}
+.frames{display:flex;gap:4px}
+.frames button{
+ border:0;background:#151d29;color:var(--muted);
+ padding:6px 8px;border-radius:5px;font-size:10px;
 }
+.frames button.active{background:#263344;color:#fff}
+.chart{height:380px;padding:10px}
+canvas{width:100%;height:100%}
 
-.asset-price{
-    color:#31d69c;
-    margin-top:3px;
-    font-size:13px;
+/* ORDER */
+.order{padding:16px}
+.order h2{font-size:16px;margin-bottom:15px}
+.side{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:6px;margin-bottom:15px;
 }
-
-.timeframes{
-    display:flex;
-    gap:5px;
+.side button{
+ border:0;padding:11px;border-radius:7px;
+ background:#18212e;color:var(--muted);
 }
-
-.timeframes button{
-    background:#151b27;
-    border:0;
-    color:#8993a3;
-    padding:7px 9px;
-    border-radius:6px;
-    cursor:pointer;
+.side .buy.active{background:#10352a;color:var(--green)}
+.side .sell.active{background:#381923;color:var(--red)}
+.summary{
+ background:#111a25;
+ padding:12px;border-radius:9px;
+ margin:14px 0;
 }
-
-.timeframes button.active,
-.timeframes button:hover{
-    color:#fff;
-    background:#242d3d;
-}
-
-.chart-area{
-    height:390px;
-    position:relative;
-    padding:12px;
-}
-
-canvas{
-    width:100%;
-    height:100%;
-}
-
-/* ================= ORDER PANEL ================= */
-
-.order-panel{
-    padding:18px;
-}
-
-.order-title{
-    font-size:18px;
-    font-weight:700;
-    margin-bottom:18px;
-}
-
-.order-tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
-    margin-bottom:18px;
-}
-
-.order-tabs button{
-    padding:12px;
-    border:0;
-    border-radius:8px;
-    background:#171d28;
-    color:#a0a9b8;
-    cursor:pointer;
-}
-
-.order-tabs button.buy-tab.active{
-    background:#12352b;
-    color:#31d69c;
-}
-
-.order-tabs button.sell-tab.active{
-    background:#351a20;
-    color:#ff5b6e;
-}
-
-.field{
-    margin-bottom:15px;
-}
-
-.field label{
-    display:block;
-    font-size:11px;
-    color:#7f899a;
-    margin-bottom:7px;
-}
-
-.input{
-    width:100%;
-    background:#080c13;
-    border:1px solid #28303d;
-    border-radius:8px;
-    padding:12px;
-    color:#fff;
-    outline:none;
-}
-
-.input:focus{
-    border-color:#2dd4bf;
-}
-
-.order-summary{
-    background:#101722;
-    border-radius:9px;
-    padding:13px;
-    margin:15px 0;
-}
-
 .summary-row{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:8px;
-    font-size:12px;
+ display:flex;justify-content:space-between;
+ font-size:11px;margin-bottom:8px;
 }
-
-.summary-row:last-child{
-    margin-bottom:0;
+.summary-row:last-child{margin:0}
+.summary-row span:first-child{color:var(--muted)}
+.trade{
+ width:100%;padding:13px;border:0;
+ border-radius:8px;color:#fff;font-weight:800;
 }
+.trade.buy{background:#15986f}
+.trade.sell{background:#c63d52}
 
-.summary-row span:first-child{
-    color:#7f899a;
+/* TABLES */
+.bottom{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:15px;
+ margin-top:15px;
 }
-
-.trade-button{
-    width:100%;
-    border:0;
-    padding:14px;
-    border-radius:9px;
-    color:#fff;
-    font-weight:700;
-    cursor:pointer;
-    font-size:14px;
+.section-head{
+ display:flex;justify-content:space-between;
+ padding:14px 16px;border-bottom:1px solid var(--border);
 }
-
-.trade-button.buy{
-    background:#19a979;
-}
-
-.trade-button.sell{
-    background:#d84459;
-}
-
-.trade-button:hover{
-    opacity:.88;
-}
-
-/* ================= BOTTOM ================= */
-
-.bottom-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-top:18px;
-}
-
-.section-header{
-    padding:16px 18px;
-    border-bottom:1px solid #202633;
-    display:flex;
-    justify-content:space-between;
-}
-
-.section-header h3{
-    font-size:14px;
-}
-
-.table-wrap{
-    overflow:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
+.section-head h3{font-size:13px}
+.section-head span{font-size:10px;color:var(--muted)}
+.table{overflow:auto}
+table{width:100%;border-collapse:collapse}
 th{
-    color:#687386;
-    font-size:10px;
-    text-align:left;
-    padding:12px 18px;
-    text-transform:uppercase;
+ color:#596678;font-size:9px;
+ text-align:left;padding:11px 15px;
 }
-
 td{
-    padding:13px 18px;
-    border-top:1px solid #181f2b;
-    font-size:12px;
+ padding:12px 15px;
+ border-top:1px solid #18212c;
+ font-size:11px;
 }
 
-.asset-cell{
-    font-weight:700;
+/* PROFILE */
+.profile{
+ display:none;
+ max-width:700px;
+}
+.profile-card{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:14px;
+ padding:22px;
+}
+.profile-avatar{
+ width:70px;height:70px;border-radius:50%;
+ background:linear-gradient(135deg,#36d6b0,#5266ff);
+ display:flex;align-items:center;justify-content:center;
+ font-size:20px;font-weight:800;
+ margin-bottom:15px;
 }
 
-.small{
-    font-size:10px;
-    color:#687386;
-    margin-top:3px;
-}
-
-/* ================= WATCHLIST ================= */
-
-.watchlist{
-    margin-top:18px;
-}
-
-.watch-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:13px 18px;
-    border-bottom:1px solid #181f2b;
-}
-
-.watch-item:last-child{
-    border-bottom:0;
-}
-
-.watch-left{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.watch-icon{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:#171e2a;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:10px;
-    font-weight:bold;
-}
-
-.watch-name{
-    font-size:12px;
-}
-
-.watch-symbol{
-    color:#687386;
-    font-size:10px;
-}
-
-.watch-right{
-    text-align:right;
-}
-
-/* ================= TOAST ================= */
-
+/* TOAST */
 .toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    background:#111925;
-    border:1px solid #283342;
-    padding:14px 18px;
-    border-radius:10px;
-    display:none;
-    z-index:100;
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
+ position:fixed;
+ right:18px;bottom:18px;
+ background:#121c27;
+ border:1px solid #2a3746;
+ padding:13px 16px;
+ border-radius:9px;
+ display:none;
+ z-index:100;
+ font-size:12px;
+}
+.toast.show{display:block}
+
+/* MOBILE */
+.mobile-menu{
+ display:none;
+ border:0;background:#151d28;color:#fff;
+ padding:8px 10px;border-radius:7px;
 }
 
-.toast.show{
-    display:block;
-    animation:toast .3s ease;
+@media(max-width:950px){
+ .layout{grid-template-columns:70px 1fr}
+ .sidebar{padding:12px 7px}
+ .menu button{font-size:0;text-align:center}
+ .menu button::first-letter{font-size:17px}
+ .trading{grid-template-columns:1fr}
+ .stats{grid-template-columns:repeat(2,1fr)}
 }
 
-@keyframes toast{
-    from{
-        transform:translateY(15px);
-        opacity:0;
-    }
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:1000px){
-
-    .app{
-        grid-template-columns:70px 1fr;
-    }
-
-    .sidebar{
-        padding:15px 8px;
-    }
-
-    .menu button{
-        font-size:0;
-        text-align:center;
-    }
-
-    .menu button::first-letter{
-        font-size:18px;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .trading-grid{
-        grid-template-columns:1fr;
-    }
-
-}
-
-@media(max-width:650px){
-
-    .header{
-        padding:0 14px;
-    }
-
-    .demo-badge{
-        display:none;
-    }
-
-    .main{
-        padding:12px;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-    }
-
-    .stat-card{
-        padding:13px;
-    }
-
-    .stat-value{
-        font-size:17px;
-    }
-
-    .chart-area{
-        height:300px;
-    }
-
-    .bottom-grid{
-        grid-template-columns:1fr;
-    }
-
-    .timeframes button{
-        padding:6px;
-        font-size:10px;
-    }
-
-    .chart-header{
-        padding:13px;
-    }
-
-    .order-panel{
-        padding:14px;
-    }
-
+@media(max-width:600px){
+ .header{padding:0 13px}
+ .demo{display:none}
+ .layout{display:block}
+ .sidebar{
+  display:none;
+  position:fixed;
+  top:68px;left:0;
+  width:220px;height:calc(100vh - 68px);
+  z-index:25;
+ }
+ .sidebar.open{display:block}
+ .mobile-menu{display:block}
+ .main{padding:12px}
+ .welcome h1{font-size:18px}
+ .stats{gap:7px}
+ .stat{padding:12px}
+ .stat strong{font-size:16px}
+ .bottom{grid-template-columns:1fr}
+ .chart{height:290px}
+ .frames button:nth-child(n+4){display:none}
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+<!-- AUTH SCREEN -->
+<div class="auth" id="auth">
+
+ <div class="auth-card">
+
+  <div class="brand">Trade<span>Flow</span></div>
+  <div class="auth-sub">Your modern trading platform</div>
+
+  <div class="auth-tabs">
+   <button class="active" id="loginTab" onclick="showAuth('login')">Login</button>
+   <button id="signupTab" onclick="showAuth('signup')">Create Account</button>
+  </div>
+
+  <div id="loginForm">
+
+   <div class="field">
+    <label>Email</label>
+    <input class="input" id="loginEmail" type="email" placeholder="you@example.com">
+   </div>
+
+   <div class="field">
+    <label>Password</label>
+    <input class="input" id="loginPassword" type="password" placeholder="Enter password">
+   </div>
+
+   <button class="primary" onclick="login()">Login to TradeFlow</button>
+
+   <button class="auth-link" onclick="forgotPassword()">
+    Forgot your password?
+   </button>
+
+  </div>
+
+  <div id="signupForm" style="display:none">
+
+   <div class="field">
+    <label>Full Name</label>
+    <input class="input" id="signupName" placeholder="Your full name">
+   </div>
+
+   <div class="field">
+    <label>Email</label>
+    <input class="input" id="signupEmail" type="email" placeholder="you@example.com">
+   </div>
+
+   <div class="field">
+    <label>Password</label>
+    <input class="input" id="signupPassword" type="password" placeholder="Create a password">
+   </div>
+
+   <button class="primary" onclick="signup()">Create TradeFlow Account</button>
+
+  </div>
+
+  <div class="message" id="authMessage"></div>
+
+ </div>
+</div>
+
+
+<!-- APP -->
+<div class="app" id="app">
+
 <header class="header">
 
-    <div class="logo">
-        Trade<span>Flow</span>
-    </div>
+ <div style="display:flex;align-items:center;gap:12px">
+  <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+  <div class="logo">Trade<span>Flow</span></div>
+ </div>
 
-    <div class="header-right">
-        <div class="demo-badge">
-            ● DEMO ACCOUNT
-        </div>
-
-        <div class="avatar">
-            TF
-        </div>
-    </div>
+ <div class="header-right">
+  <div class="demo">● DEMO ACCOUNT</div>
+  <div class="avatar" id="headerAvatar">TF</div>
+ </div>
 
 </header>
 
 
-<div class="app">
+<div class="layout">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
 
-    <div class="menu-title">Trading</div>
+ <div class="menu-title">Platform</div>
 
-    <div class="menu">
+ <div class="menu">
+  <button class="active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
+  <button onclick="showPage('dashboard',this)">📈 Markets</button>
+  <button onclick="showPage('dashboard',this)">💼 Portfolio</button>
+  <button onclick="showPage('dashboard',this)">📋 Orders</button>
+ </div>
 
-        <button class="active">📊 Dashboard</button>
+ <div class="menu-title">Account</div>
 
-        <button>📈 Markets</button>
-
-        <button>💼 Portfolio</button>
-
-        <button>📋 Orders</button>
-
-    </div>
-
-
-    <div class="menu-title">Account</div>
-
-    <div class="menu">
-
-        <button>👤 Profile</button>
-
-        <button>⚙ Settings</button>
-
-        <button>🔔 Notifications</button>
-
-    </div>
+ <div class="menu">
+  <button onclick="showPage('profile',this)">👤 Profile</button>
+  <button onclick="showToast('Settings coming soon')">⚙ Settings</button>
+  <button onclick="showToast('No new notifications')">🔔 Notifications</button>
+  <button onclick="logout()">🚪 Logout</button>
+ </div>
 
 </aside>
 
 
-<!-- MAIN -->
 <main class="main">
 
+<!-- DASHBOARD -->
+<div id="dashboard">
 
-<!-- STATS -->
+ <div class="welcome">
+  <div>
+   <h1>Welcome back, <span id="welcomeName">Trader</span> 👋</h1>
+   <p>Monitor markets and manage your demo portfolio.</p>
+  </div>
+ </div>
 
-<section class="stats">
 
-    <div class="stat-card">
-        <div class="stat-label">Available Balance</div>
-        <div class="stat-value" id="balance">$10,000.00</div>
+ <section class="stats">
+
+  <div class="stat">
+   <label>AVAILABLE BALANCE</label>
+   <strong id="balance">$10,000.00</strong>
+  </div>
+
+  <div class="stat">
+   <label>EQUITY</label>
+   <strong id="equity">$10,000.00</strong>
+  </div>
+
+  <div class="stat">
+   <label>TODAY'S P/L</label>
+   <strong class="green" id="dailyPL">+$0.00</strong>
+  </div>
+
+  <div class="stat">
+   <label>OPEN POSITIONS</label>
+   <strong id="positionCount">0</strong>
+  </div>
+
+ </section>
+
+
+ <section class="ticker">
+
+  <div class="ticker-card">
+   <div class="ticker-name">BTC/USD</div>
+   <div class="ticker-price" id="btc">$65,000</div>
+   <div class="ticker-change green">+1.24%</div>
+  </div>
+
+  <div class="ticker-card">
+   <div class="ticker-name">ETH/USD</div>
+   <div class="ticker-price" id="eth">$3,500</div>
+   <div class="ticker-change green">+0.82%</div>
+  </div>
+
+  <div class="ticker-card">
+   <div class="ticker-name">XAU/USD</div>
+   <div class="ticker-price" id="gold">$2,500</div>
+   <div class="ticker-change red">-0.31%</div>
+  </div>
+
+  <div class="ticker-card">
+   <div class="ticker-name">EUR/USD</div>
+   <div class="ticker-price" id="eur">1.0850</div>
+   <div class="ticker-change green">+0.16%</div>
+  </div>
+
+ </section>
+
+
+ <section class="trading">
+
+  <div class="panel">
+
+   <div class="chart-head">
+
+    <div class="asset">
+     <div class="asset-icon" id="assetIcon">₿</div>
+
+     <div>
+      <div class="asset-name" id="assetName">Bitcoin / USD</div>
+      <div class="asset-price" id="assetPrice">$65,000.00</div>
+     </div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-label">Equity</div>
-        <div class="stat-value" id="equity">$10,000.00</div>
+    <div class="frames">
+     <button>1m</button>
+     <button class="active">5m</button>
+     <button>15m</button>
+     <button>1H</button>
+     <button>1D</button>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-label">Today's P/L</div>
-        <div class="stat-value green" id="dailyPL">+$0.00</div>
+   </div>
+
+   <div class="chart">
+    <canvas id="chart"></canvas>
+   </div>
+
+  </div>
+
+
+  <div class="panel">
+
+   <div class="order">
+
+    <h2>Place Order</h2>
+
+    <div class="side">
+     <button class="buy active" id="buySide" onclick="setSide('buy')">Buy</button>
+     <button class="sell" id="sellSide" onclick="setSide('sell')">Sell</button>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-label">Open Positions</div>
-        <div class="stat-value" id="positionCount">0</div>
+    <div class="field">
+     <label>Asset</label>
+     <select class="input" id="assetSelect" onchange="changeAsset()">
+      <option value="BTC">Bitcoin (BTC/USD)</option>
+      <option value="ETH">Ethereum (ETH/USD)</option>
+      <option value="GOLD">Gold (XAU/USD)</option>
+      <option value="EUR">EUR/USD</option>
+     </select>
     </div>
 
-</section>
-
-
-<!-- MARKET TICKER -->
-
-<section class="ticker">
-
-    <div class="ticker-card">
-        <div class="ticker-name">BTC/USD</div>
-        <div class="ticker-price" id="btcTicker">$65,000</div>
-        <div class="ticker-change green">+1.24%</div>
+    <div class="field">
+     <label>Order Type</label>
+     <select class="input">
+      <option>Market Order</option>
+      <option>Limit Order</option>
+      <option>Stop Order</option>
+     </select>
     </div>
 
-    <div class="ticker-card">
-        <div class="ticker-name">ETH/USD</div>
-        <div class="ticker-price" id="ethTicker">$3,500</div>
-        <div class="ticker-change green">+0.82%</div>
+    <div class="field">
+     <label>Amount USD</label>
+     <input class="input" id="amount" type="number" value="100" min="1">
     </div>
 
-    <div class="ticker-card">
-        <div class="ticker-name">XAU/USD</div>
-        <div class="ticker-price" id="goldTicker">$2,500</div>
-        <div class="ticker-change red">-0.31%</div>
+    <div class="summary">
+     <div class="summary-row">
+      <span>Market Price</span>
+      <span id="summaryPrice">$65,000</span>
+     </div>
+     <div class="summary-row">
+      <span>Estimated Fee</span>
+      <span id="fee">$0.25</span>
+     </div>
+     <div class="summary-row">
+      <span>Order Value</span>
+      <span id="orderValue">$100</span>
+     </div>
     </div>
 
-    <div class="ticker-card">
-        <div class="ticker-name">EUR/USD</div>
-        <div class="ticker-price" id="eurTicker">1.0850</div>
-        <div class="ticker-change green">+0.16%</div>
-    </div>
+    <button class="trade buy" id="tradeButton" onclick="placeTrade()">
+     Buy BTC
+    </button>
 
-    <div class="ticker-card">
-        <div class="ticker-name">NASDAQ</div>
-        <div class="ticker-price" id="nasdaqTicker">18,250</div>
-        <div class="ticker-change green">+0.42%</div>
-    </div>
+   </div>
 
-</section>
+  </div>
+
+ </section>
 
 
-<!-- TRADING AREA -->
+ <section class="bottom">
 
-<section class="trading-grid">
+  <div class="panel">
 
+   <div class="section-head">
+    <h3>Open Positions</h3>
+    <span id="openCount">0</span>
+   </div>
 
-<!-- CHART -->
+   <div class="table">
+    <table>
+     <thead>
+      <tr>
+       <th>Asset</th>
+       <th>Amount</th>
+       <th>Entry</th>
+       <th>P/L</th>
+      </tr>
+     </thead>
+     <tbody id="positions">
+      <tr>
+       <td colspan="4" style="text-align:center;color:#596678">
+        No open positions
+       </td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
 
-<div class="panel">
-
-    <div class="chart-header">
-
-        <div class="asset-info">
-
-            <div class="coin" id="coinIcon">
-                ₿
-            </div>
-
-            <div>
-                <div class="asset-title" id="assetTitle">
-                    Bitcoin / USD
-                </div>
-
-                <div class="asset-price" id="assetPrice">
-                    $65,000.00
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="timeframes">
-
-            <button>1m</button>
-            <button class="active">5m</button>
-            <button>15m</button>
-            <button>1H</button>
-            <button>1D</button>
-
-        </div>
-
-    </div>
+  </div>
 
 
-    <div class="chart-area">
+  <div class="panel">
 
-        <canvas id="chart"></canvas>
+   <div class="section-head">
+    <h3>Recent Trades</h3>
+    <span>History</span>
+   </div>
 
-    </div>
+   <div class="table">
+    <table>
+     <thead>
+      <tr>
+       <th>Asset</th>
+       <th>Side</th>
+       <th>Amount</th>
+       <th>Time</th>
+      </tr>
+     </thead>
+     <tbody id="history">
+      <tr>
+       <td colspan="4" style="text-align:center;color:#596678">
+        No trades yet
+       </td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+
+  </div>
+
+ </section>
 
 </div>
 
 
-<!-- ORDER PANEL -->
+<!-- PROFILE -->
+<div class="profile" id="profile">
 
-<div class="panel">
+ <div class="welcome">
+  <div>
+   <h1>Profile</h1>
+   <p>Manage your TradeFlow account.</p>
+  </div>
+ </div>
 
-    <div class="order-panel">
+ <div class="profile-card">
 
-        <div class="order-title">
-            Place Order
-        </div>
+  <div class="profile-avatar" id="profileAvatar">TF</div>
 
+  <div class="field">
+   <label>Full Name</label>
+   <input class="input" id="profileName" readonly>
+  </div>
 
-        <div class="order-tabs">
+  <div class="field">
+   <label>Email</label>
+   <input class="input" id="profileEmail" readonly>
+  </div>
 
-            <button
-                class="buy-tab active"
-                onclick="setSide('buy')"
-                id="buyTab">
-                Buy
-            </button>
+  <div class="field">
+   <label>Account Status</label>
+   <input class="input" value="Demo Account" readonly>
+  </div>
 
-            <button
-                class="sell-tab"
-                onclick="setSide('sell')"
-                id="sellTab">
-                Sell
-            </button>
+  <button class="primary" onclick="showToast('Profile settings saved')">
+   Save Changes
+  </button>
 
-        </div>
-
-
-        <div class="field">
-
-            <label>ASSET</label>
-
-            <select
-                class="input"
-                id="assetSelect"
-                onchange="changeAsset()">
-
-                <option value="BTC">Bitcoin (BTC/USD)</option>
-
-                <option value="ETH">Ethereum (ETH/USD)</option>
-
-                <option value="GOLD">Gold (XAU/USD)</option>
-
-                <option value="EUR">EUR/USD</option>
-
-                <option value="NASDAQ">NASDAQ</option>
-
-            </select>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>ORDER TYPE</label>
-
-            <select class="input">
-
-                <option>Market Order</option>
-
-                <option>Limit Order</option>
-
-                <option>Stop Order</option>
-
-            </select>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>AMOUNT (USD)</label>
-
-            <input
-                class="input"
-                type="number"
-                id="amount"
-                value="100"
-                min="1">
-
-        </div>
-
-
-        <div class="order-summary">
-
-            <div class="summary-row">
-                <span>Current Price</span>
-                <span id="summaryPrice">$65,000</span>
-            </div>
-
-            <div class="summary-row">
-                <span>Estimated Fee</span>
-                <span id="fee">$0.25</span>
-            </div>
-
-            <div class="summary-row">
-                <span>Order Value</span>
-                <span id="orderValue">$100</span>
-            </div>
-
-        </div>
-
-
-        <button
-            class="trade-button buy"
-            id="tradeButton"
-            onclick="placeTrade()">
-
-            Buy BTC
-
-        </button>
-
-    </div>
+ </div>
 
 </div>
-
-</section>
-
-
-<!-- POSITIONS + HISTORY -->
-
-<section class="bottom-grid">
-
-
-<!-- POSITIONS -->
-
-<div class="panel">
-
-    <div class="section-header">
-
-        <h3>Open Positions</h3>
-
-        <span id="openCount">0</span>
-
-    </div>
-
-
-    <div class="table-wrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Asset</th>
-                    <th>Amount</th>
-                    <th>Entry</th>
-                    <th>P/L</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="positionsBody">
-
-                <tr>
-
-                    <td colspan="4"
-                        style="text-align:center;color:#687386">
-
-                        No open positions
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-
-<!-- HISTORY -->
-
-<div class="panel">
-
-    <div class="section-header">
-
-        <h3>Recent Trades</h3>
-
-        <span>History</span>
-
-    </div>
-
-
-    <div class="table-wrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Asset</th>
-                    <th>Side</th>
-                    <th>Amount</th>
-                    <th>Time</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="historyBody">
-
-                <tr>
-
-                    <td colspan="4"
-                        style="text-align:center;color:#687386">
-
-                        No trades yet
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- WATCHLIST -->
-
-<section class="panel watchlist">
-
-    <div class="section-header">
-
-        <h3>Market Watchlist</h3>
-
-        <span>Live</span>
-
-    </div>
-
-
-    <div class="watch-item">
-
-        <div class="watch-left">
-
-            <div class="watch-icon">₿</div>
-
-            <div>
-                <div class="watch-name">Bitcoin</div>
-                <div class="watch-symbol">BTC/USD</div>
-            </div>
-
-        </div>
-
-        <div class="watch-right">
-
-            <div id="watchBTC">$65,000</div>
-
-            <div class="green">+1.24%</div>
-
-        </div>
-
-    </div>
-
-
-    <div class="watch-item">
-
-        <div class="watch-left">
-
-            <div class="watch-icon">Ξ</div>
-
-            <div>
-                <div class="watch-name">Ethereum</div>
-                <div class="watch-symbol">ETH/USD</div>
-            </div>
-
-        </div>
-
-        <div class="watch-right">
-
-            <div id="watchETH">$3,500</div>
-
-            <div class="green">+0.82%</div>
-
-        </div>
-
-    </div>
-
-
-    <div class="watch-item">
-
-        <div class="watch-left">
-
-            <div class="watch-icon">Au</div>
-
-            <div>
-                <div class="watch-name">Gold</div>
-                <div class="watch-symbol">XAU/USD</div>
-            </div>
-
-        </div>
-
-        <div class="watch-right">
-
-            <div id="watchGOLD">$2,500</div>
-
-            <div class="red">-0.31%</div>
-
-        </div>
-
-    </div>
-
-</section>
 
 </main>
 
 </div>
-
-
-<div class="toast" id="toast">
-    Order placed successfully.
 </div>
+
+
+<div class="toast" id="toast"></div>
 
 
 <script>
 
-/* ================= MARKET DATA ================= */
+/* ================= AUTH ================= */
 
-const prices = {
+let currentUser =
+ JSON.parse(localStorage.getItem("tradeflowUser") || "null");
 
-    BTC:65000,
-    ETH:3500,
-    GOLD:2500,
-    EUR:1.0850,
-    NASDAQ:18250
+function showAuth(type){
 
-};
+ const login =
+  document.getElementById("loginForm");
 
+ const signup =
+  document.getElementById("signupForm");
 
-const names = {
+ const loginTab =
+  document.getElementById("loginTab");
 
-    BTC:"Bitcoin / USD",
-    ETH:"Ethereum / USD",
-    GOLD:"Gold / USD",
-    EUR:"EUR / USD",
-    NASDAQ:"NASDAQ"
+ const signupTab =
+  document.getElementById("signupTab");
 
-};
+ document.getElementById("authMessage").innerText="";
 
+ if(type==="login"){
+  login.style.display="block";
+  signup.style.display="none";
+  loginTab.classList.add("active");
+  signupTab.classList.remove("active");
+ }else{
+  login.style.display="none";
+  signup.style.display="block";
+  signupTab.classList.add("active");
+  loginTab.classList.remove("active");
+ }
+}
 
-const icons = {
+function signup(){
 
-    BTC:"₿",
-    ETH:"Ξ",
-    GOLD:"Au",
-    EUR:"€",
-    NASDAQ:"N"
+ const name =
+  document.getElementById("signupName").value.trim();
 
-};
+ const email =
+  document.getElementById("signupEmail").value.trim();
 
+ const password =
+  document.getElementById("signupPassword").value;
 
-let selectedAsset = "BTC";
+ const message =
+  document.getElementById("authMessage");
 
-let side = "buy";
+ if(!name || !email || !password){
+  message.innerText="Please complete all fields.";
+  return;
+ }
 
-let balance = 10000;
+ const user={
+  name:name,
+  email:email,
+  password:password
+ };
 
-let positions = {};
+ localStorage.setItem(
+  "tradeflowUser",
+  JSON.stringify(user)
+ );
 
-let history = [];
+ message.innerText="Account created. Opening TradeFlow...";
 
-let chartData = [];
+ setTimeout(()=>{
+  currentUser=user;
+  openApp();
+ },700);
+}
 
+function login(){
 
-/* ================= FORMAT ================= */
+ const email =
+  document.getElementById("loginEmail").value.trim();
 
-function money(value){
+ const password =
+  document.getElementById("loginPassword").value;
 
-    return "$" + Number(value).toLocaleString(
-        "en-US",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
+ const saved =
+  JSON.parse(localStorage.getItem("tradeflowUser") || "null");
 
+ const message =
+  document.getElementById("authMessage");
+
+ if(!email || !password){
+  message.innerText="Enter your email and password.";
+  return;
+ }
+
+ if(!saved){
+  message.innerText="No demo account found. Create an account first.";
+  return;
+ }
+
+ if(email!==saved.email || password!==saved.password){
+  message.innerText="Email or password is incorrect.";
+  return;
+ }
+
+ currentUser=saved;
+ openApp();
+}
+
+function forgotPassword(){
+
+ document.getElementById("authMessage").innerText =
+ "Password recovery will be connected to secure email authentication later.";
 }
 
 
-/* ================= ASSET ================= */
+/* ================= APP ================= */
 
-function changeAsset(){
+function openApp(){
 
-    selectedAsset =
-        document.getElementById("assetSelect").value;
+ document.getElementById("auth").style.display="none";
+ document.getElementById("app").style.display="block";
 
-    updateAssetUI();
+ const name =
+  currentUser?.name || "Trader";
 
+ const initials =
+  name.split(" ")
+  .map(x=>x[0])
+  .join("")
+  .slice(0,2)
+  .toUpperCase();
+
+ document.getElementById("welcomeName").innerText=name;
+ document.getElementById("headerAvatar").innerText=initials;
+ document.getElementById("profileAvatar").innerText=initials;
+ document.getElementById("profileName").value=name;
+ document.getElementById("profileEmail").value=currentUser?.email || "";
+
+ updateAsset();
+ updateDashboard();
+ createChart();
+}
+
+function logout(){
+
+ document.getElementById("app").style.display="none";
+ document.getElementById("auth").style.display="flex";
+
+ showAuth("login");
 }
 
 
-function updateAssetUI(){
+/* ================= NAV ================= */
 
-    const price = prices[selectedAsset];
+function showPage(page,button){
 
-    document.getElementById("assetTitle")
-        .innerText = names[selectedAsset];
+ document.getElementById("dashboard").style.display =
+  page==="dashboard" ? "block":"none";
 
-    document.getElementById("assetPrice")
-        .innerText =
-        selectedAsset === "EUR"
-        ? price.toFixed(4)
-        : money(price);
+ document.getElementById("profile").style.display =
+  page==="profile" ? "block":"none";
 
-    document.getElementById("summaryPrice")
-        .innerText =
-        selectedAsset === "EUR"
-        ? price.toFixed(4)
-        : money(price);
+ document.querySelectorAll(".menu button")
+ .forEach(b=>b.classList.remove("active"));
 
-    document.getElementById("coinIcon")
-        .innerText = icons[selectedAsset];
+ if(button) button.classList.add("active");
 
-    document.getElementById("tradeButton")
-        .innerText =
-        (side === "buy" ? "Buy " : "Sell ")
-        + selectedAsset;
+ document.getElementById("sidebar").classList.remove("open");
+}
 
-    createChart();
-
+function toggleSidebar(){
+ document.getElementById("sidebar").classList.toggle("open");
 }
 
 
-/* ================= BUY / SELL ================= */
-
-function setSide(newSide){
-
-    side = newSide;
-
-    const buyTab =
-        document.getElementById("buyTab");
-
-    const sellTab =
-        document.getElementById("sellTab");
-
-    const button =
-        document.getElementById("tradeButton");
-
-    buyTab.classList.remove("active");
-
-    sellTab.classList.remove("active");
-
-    if(side === "buy"){
-
-        buyTab.classList.add("active");
-
-        button.className =
-            "trade-button buy";
-
-    }else{
-
-        sellTab.classList.add("active");
-
-        button.className =
-            "trade-button sell";
-
-    }
-
-    button.innerText =
-           
+/* ================= TRADING ================= 
