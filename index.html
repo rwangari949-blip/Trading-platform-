@@ -2,87 +2,78 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>TradeFlow</title>
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  margin:0;
   font-family:Arial,sans-serif;
-  background:#07111f;
+  background:#07111d;
   color:#fff;
 }
 button,input,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
+button{cursor:pointer;border:0}
 
 .auth{
   min-height:100vh;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   padding:20px;
+  background:linear-gradient(135deg,#07111d,#10283b);
 }
-.authbox{
+.auth-box{
   width:100%;
   max-width:420px;
-  background:#0d1b2a;
+  background:#0d1c2b;
   padding:30px;
   border-radius:18px;
-  border:1px solid #263b53;
+  box-shadow:0 15px 50px #0008;
 }
 .logo{
   text-align:center;
-  font-size:32px;
+  font-size:30px;
   font-weight:bold;
+  color:#22c55e;
   margin-bottom:8px;
 }
-.logo span{color:#22c55e}
-.subtitle{
-  text-align:center;
-  color:#94a3b8;
-  margin-bottom:25px;
-}
-h2{text-align:center}
-input,select{
+.subtitle{text-align:center;color:#9fb0c0;margin-bottom:25px}
+.auth-box input{
   width:100%;
-  padding:13px;
-  margin:8px 0;
-  border-radius:8px;
-  border:1px solid #30465e;
-  background:#07111f;
+  padding:14px;
+  margin:7px 0;
+  border:1px solid #263b4d;
+  border-radius:9px;
+  background:#081521;
   color:white;
+  outline:none;
 }
-.btn{
+.primary{
   width:100%;
-  padding:13px;
-  border:0;
-  border-radius:8px;
-  background:#2563eb;
-  color:white;
+  padding:14px;
+  border-radius:9px;
+  background:#22c55e;
+  color:#041009;
   font-weight:bold;
-  margin-top:8px;
-}
-.switch{
-  text-align:center;
-  margin-top:18px;
-  color:#94a3b8;
-}
-.switch button{
-  border:0;
-  background:none;
-  color:#60a5fa;
-}
-.msg{
-  text-align:center;
-  min-height:20px;
   margin-top:10px;
 }
-.error{color:#ef4444}
-.success{color:#22c55e}
+.secondary{
+  width:100%;
+  padding:13px;
+  border-radius:9px;
+  background:#172b3d;
+  color:white;
+  margin-top:10px;
+}
+.small-note{
+  text-align:center;
+  color:#8da0b1;
+  font-size:12px;
+  margin-top:15px;
+}
 
-#app{display:none}
+.app{display:none;min-height:100vh}
 
 .sidebar{
   position:fixed;
@@ -90,55 +81,50 @@ input,select{
   top:0;
   bottom:0;
   width:220px;
-  background:#0a1726;
-  border-right:1px solid #20364d;
-  padding:20px 12px;
+  background:#091724;
+  padding:22px 14px;
+  border-right:1px solid #172c3d;
 }
-.sidebar .logo{
-  font-size:25px;
-  text-align:left;
-  padding:0 10px 25px;
+.brand{
+  font-size:24px;
+  font-weight:bold;
+  color:#22c55e;
+  padding:8px 12px 25px;
 }
-.nav{
+.nav button{
+  display:block;
   width:100%;
-  background:none;
-  border:0;
-  color:#94a3b8;
   text-align:left;
-  padding:13px;
-  border-radius:8px;
-  margin-bottom:5px;
+  background:transparent;
+  color:#a9bac8;
+  padding:13px 14px;
+  border-radius:9px;
+  margin-bottom:4px;
 }
-.nav:hover,.nav.active{
-  background:#172a40;
+.nav button:hover,.nav button.active{
+  background:#142b3d;
   color:white;
-}
-.logout{
-  position:absolute;
-  bottom:20px;
-  left:12px;
-  right:12px;
-  background:#401820;
-  color:#fca5a5;
 }
 
 .main{
   margin-left:220px;
-  padding:25px;
+  padding:22px;
 }
-.top{
+.topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px;
 }
+.welcome{font-size:24px;font-weight:bold}
 .badge{
-  background:#172554;
-  color:#93c5fd;
+  background:#143426;
+  color:#4ade80;
   padding:8px 12px;
   border-radius:20px;
   font-size:12px;
 }
+
 .page{display:none}
 .page.active{display:block}
 
@@ -148,912 +134,736 @@ input,select{
   gap:15px;
   margin-bottom:20px;
 }
-.card,.panel{
-  background:#0d1b2a;
-  border:1px solid #20364d;
+.card{
+  background:#0d1c2b;
+  border:1px solid #172c3d;
   border-radius:14px;
   padding:20px;
 }
-.label{
-  color:#94a3b8;
-  font-size:13px;
-  margin-bottom:8px;
-}
-.value{
-  font-size:24px;
-  font-weight:bold;
-}
+.card-title{color:#8fa2b3;font-size:13px;margin-bottom:8px}
+.card-value{font-size:25px;font-weight:bold}
+.green{color:#4ade80}
+.red{color:#f87171}
 
-.grid{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:18px;
+.section{
+  background:#0d1c2b;
+  border:1px solid #172c3d;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
 }
-.paneltitle{
-  font-weight:bold;
-  margin-bottom:18px;
+.section h2{margin-bottom:15px}
+
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
 .market{
-  display:grid;
-  grid-template-columns:1.5fr 1fr 1fr;
-  gap:10px;
-  background:#091522;
-  padding:14px;
-  margin-bottom:8px;
-  border-radius:9px;
-  cursor:pointer;
-}
-.symbol{
-  display:block;
-  color:#64748b;
-  font-size:12px;
-  margin-top:4px;
-}
-.right{text-align:right}
-.green{color:#22c55e}
-.red{color:#ef4444}
-
-.chart{
-  height:300px;
-  display:flex;
-  align-items:flex-end;
-  gap:4px;
-  background:#091522;
-  padding:20px 8px;
+  background:#091724;
+  padding:17px;
   border-radius:10px;
+  display:flex;
+  justify-content:space-between;
 }
-.bar{
-  flex:1;
-  background:#2563eb;
-  border-radius:3px 3px 0 0;
-  min-width:3px;
-}
+.market-name{font-weight:bold}
+.market-symbol{font-size:12px;color:#7f94a6;margin-top:4px}
+.market-price{font-weight:bold}
 
-.tradegrid{
+.trade-layout{
   display:grid;
   grid-template-columns:2fr 1fr;
   gap:18px;
 }
-.tradebuttons{
+.chart-wrap{
+  background:#07131f;
+  border-radius:12px;
+  padding:10px;
+  overflow:hidden;
+}
+#priceChart{
+  width:100%;
+  height:360px;
+  display:block;
+}
+.trade-box{
+  background:#091724;
+  border-radius:12px;
+  padding:18px;
+}
+.trade-box label{
+  display:block;
+  color:#9aabba;
+  font-size:13px;
+  margin:12px 0 6px;
+}
+.trade-box input,.trade-box select{
+  width:100%;
+  padding:13px;
+  background:#07131f;
+  color:white;
+  border:1px solid #294052;
+  border-radius:8px;
+}
+.trade-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:10px;
+  margin-top:15px;
 }
-.buy,.sell{
-  border:0;
-  padding:14px;
+.buy{
+  background:#22c55e;
+  color:#041009;
+  padding:13px;
   border-radius:8px;
-  color:white;
   font-weight:bold;
 }
-.buy{background:#16a34a}
-.sell{background:#dc2626}
+.sell{
+  background:#ef4444;
+  color:white;
+  padding:13px;
+  border-radius:8px;
+  font-weight:bold;
+}
 
 table{
   width:100%;
   border-collapse:collapse;
 }
 th,td{
-  padding:12px 8px;
+  padding:13px 8px;
+  border-bottom:1px solid #1a3041;
   text-align:left;
-  border-bottom:1px solid #20364d;
+  font-size:13px;
 }
-th{
-  color:#94a3b8;
-  font-size:12px;
-}
+th{color:#8ea1b1}
 
-.actions{
+.wallet-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:18px;
 }
-
-.mobile{
-  display:none;
-  background:#172a40;
-  border:0;
+.wallet-box{
+  background:#091724;
+  padding:20px;
+  border-radius:12px;
+}
+.wallet-box input{
+  width:100%;
+  padding:13px;
+  background:#07131f;
   color:white;
-  padding:10px;
-  border-radius:7px;
+  border:1px solid #294052;
+  border-radius:8px;
+  margin:12px 0;
+}
+.wallet-box button{
+  width:100%;
+  padding:13px;
+  border-radius:8px;
+  background:#22c55e;
+  font-weight:bold;
 }
 
-@media(max-width:900px){
-  .cards{grid-template-columns:1fr 1fr}
-  .grid,.tradegrid{grid-template-columns:1fr}
+.profile-row{
+  padding:15px 0;
+  border-bottom:1px solid #1a3041;
 }
-@media(max-width:700px){
+.profile-label{color:#8498aa;font-size:12px;margin-bottom:5px}
+
+.empty{
+  color:#8295a6;
+  text-align:center;
+  padding:25px;
+}
+
+@media(max-width:800px){
   .sidebar{
-    transform:translateX(-100%);
-    transition:.2s;
-    z-index:20;
+    position:relative;
+    width:100%;
+    height:auto;
+    border-right:0;
+    border-bottom:1px solid #172c3d;
   }
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0;padding:15px}
-  .mobile{display:block}
-  .cards{grid-template-columns:1fr 1fr}
-  .actions{grid-template-columns:1fr}
+  .nav{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:5px;
+  }
+  .nav button{text-align:center;font-size:12px}
+  .main{margin-left:0;padding:14px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .trade-layout,.wallet-grid{grid-template-columns:1fr}
+  .market-grid{grid-template-columns:1fr}
+  .topbar{gap:10px}
+  .welcome{font-size:19px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN / SIGN UP -->
+<!-- LOGIN -->
 <div class="auth" id="auth">
+  <div class="auth-box">
+    <div class="logo">TradeFlow</div>
+    <div class="subtitle">Your future in finance</div>
 
-<div class="authbox">
+    <div id="loginForm">
+      <input id="loginEmail" type="email" placeholder="Email">
+      <input id="loginPassword" type="password" placeholder="Password">
+      <button class="primary" onclick="login()">Login</button>
+      <button class="secondary" onclick="showCreate()">Create Account</button>
+    </div>
 
-<div class="logo">Trade<span>Flow</span></div>
-<div class="subtitle">Your future finance platform</div>
+    <div id="createForm" style="display:none">
+      <input id="createName" placeholder="Full name">
+      <input id="createEmail" type="email" placeholder="Email">
+      <input id="createPassword" type="password" placeholder="Password">
+      <button class="primary" onclick="createAccount()">Create Account</button>
+      <button class="secondary" onclick="showLogin()">Back to Login</button>
+    </div>
 
-<div id="loginBox">
-
-<h2>Login</h2>
-
-<input id="loginEmail" type="email" placeholder="Email">
-<input id="loginPassword" type="password" placeholder="Password">
-
-<button class="btn" onclick="login()">Login</button>
-
-<div class="msg" id="loginMsg"></div>
-
-<div class="switch">
-Don't have an account?
-<button onclick="signupScreen()">Create Account</button>
+    <div class="small-note">Demo platform • No real money is processed</div>
+  </div>
 </div>
-
-</div>
-
-
-<div id="signupBox" class="hidden">
-
-<h2>Create Account</h2>
-
-<input id="name" type="text" placeholder="Full name">
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-
-<button class="btn" onclick="createAccount()">Create Account</button>
-
-<div class="msg" id="signupMsg"></div>
-
-<div class="switch">
-Already have an account?
-<button onclick="loginScreen()">Login</button>
-</div>
-
-</div>
-
-</div>
-</div>
-
 
 <!-- APP -->
-<div id="app">
+<div class="app" id="app">
 
-<aside class="sidebar" id="sidebar">
+  <aside class="sidebar">
+    <div class="brand">TradeFlow</div>
 
-<div class="logo">Trade<span>Flow</span></div>
+    <div class="nav">
+      <button onclick="page('dashboard',this)">Dashboard</button>
+      <button onclick="page('markets',this)">Markets</button>
+      <button onclick="page('trade',this)">Trade</button>
+      <button onclick="page('positions',this)">Positions</button>
+      <button onclick="page('history',this)">History</button>
+      <button onclick="page('wallet',this)">Wallet</button>
+      <button onclick="page('profile',this)">Profile</button>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </aside>
 
-<button class="nav active" onclick="page('dashboard',this)">🏠 Dashboard</button>
-<button class="nav" onclick="page('markets',this)">📊 Markets</button>
-<button class="nav" onclick="page('trade',this)">💱 Trade</button>
-<button class="nav" onclick="page('positions',this)">📈 Positions</button>
-<button class="nav" onclick="page('history',this)">🧾 History</button>
-<button class="nav" onclick="page('wallet',this)">💰 Wallet</button>
-<button class="nav" onclick="page('profile',this)">👤 Profile</button>
+  <main class="main">
 
-<button class="nav logout" onclick="logout()">🚪 Logout</button>
+    <div class="topbar">
+      <div class="welcome">Welcome, <span id="hello">Trader</span> 👋</div>
+      <div class="badge">DEMO ACCOUNT</div>
+    </div>
 
-</aside>
+    <!-- DASHBOARD -->
+    <section class="page active" id="dashboard">
 
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">Account Balance</div>
+          <div class="card-value">$<span id="balance">10,000.00</span></div>
+        </div>
 
-<main class="main">
+        <div class="card">
+          <div class="card-title">Available Balance</div>
+          <div class="card-value">$<span id="available">10,000.00</span></div>
+        </div>
 
-<div class="top">
-<button class="mobile" onclick="menu()">☰</button>
-<strong id="hello">TradeFlow</strong>
-<span class="badge">DEMO ACCOUNT</span>
+        <div class="card">
+          <div class="card-title">Open Positions</div>
+          <div class="card-value" id="positionCount">0</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Profit / Loss</div>
+          <div class="card-value green" id="profit">$0.00</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Markets</h2>
+        <div class="market-grid">
+
+          <div class="market">
+            <div>
+              <div class="market-name">Bitcoin</div>
+              <div class="market-symbol">BTC/USD</div>
+            </div>
+            <div class="market-price" id="btc">$65,000</div>
+          </div>
+
+          <div class="market">
+            <div>
+              <div class="market-name">Ethereum</div>
+              <div class="market-symbol">ETH/USD</div>
+            </div>
+            <div class="market-price" id="eth">$3,200</div>
+          </div>
+
+          <div class="market">
+            <div>
+              <div class="market-name">Gold</div>
+              <div class="market-symbol">XAU/USD</div>
+            </div>
+            <div class="market-price" id="gold">$2,650</div>
+          </div>
+
+          <div class="market">
+            <div>
+              <div class="market-name">EUR/USD</div>
+              <div class="market-symbol">Forex</div>
+            </div>
+            <div class="market-price" id="eur">1.0800</div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MARKETS -->
+    <section class="page" id="markets">
+      <div class="section">
+        <h2>Markets 📊</h2>
+        <div class="market-grid">
+
+          <div class="market">
+            <div><b>Bitcoin</b><div class="market-symbol">BTC/USD</div></div>
+            <div id="btc2">$65,000</div>
+          </div>
+
+          <div class="market">
+            <div><b>Ethereum</b><div class="market-symbol">ETH/USD</div></div>
+            <div id="eth2">$3,200</div>
+          </div>
+
+          <div class="market">
+            <div><b>Gold</b><div class="market-symbol">XAU/USD</div></div>
+            <div id="gold2">$2,650</div>
+          </div>
+
+          <div class="market">
+            <div><b>EUR/USD</b><div class="market-symbol">Forex</div></div>
+            <div id="eur2">1.0800</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TRADE -->
+    <section class="page" id="trade">
+
+      <div class="section">
+        <h2>Trade</h2>
+
+        <div class="trade-layout">
+
+          <div class="chart-wrap">
+            <canvas id="priceChart"></canvas>
+          </div>
+
+          <div class="trade-box">
+
+            <label>Asset</label>
+            <select id="asset" onchange="changeAsset()">
+              <option>Bitcoin</option>
+              <option>Ethereum</option>
+              <option>Gold</option>
+              <option>EUR/USD</option>
+            </select>
+
+            <label>Trade Amount ($)</label>
+            <input id="amount" type="number" min="1" value="100">
+
+            <div class="trade-buttons">
+              <button class="buy" onclick="trade('BUY')">BUY</button>
+              <button class="sell" onclick="trade('SELL')">SELL</button>
+            </div>
+
+            <p style="color:#7f94a6;font-size:12px;margin-top:15px">
+              Demo orders only. No real money is involved.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- POSITIONS -->
+    <section class="page" id="positions">
+      <div class="section">
+        <h2>Open Positions</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="positionsTable"></tbody>
+        </table>
+
+        <div class="empty" id="noPositions">No open positions.</div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="page" id="history">
+      <div class="section">
+        <h2>Trade History</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="historyTable"></tbody>
+        </table>
+
+        <div class="empty" id="noHistory">No trades yet.</div>
+      </div>
+    </section>
+
+    <!-- WALLET -->
+    <section class="page" id="wallet">
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">Wallet Balance</div>
+          <div class="card-value">$<span id="walletBalance">10,000.00</span></div>
+        </div>
+      </div>
+
+      <div class="wallet-grid">
+
+        <div class="wallet-box">
+          <h2>Deposit</h2>
+          <p style="color:#8fa2b3;font-size:13px;margin-top:5px">
+            Add demo funds to your TradeFlow balance.
+          </p>
+          <input id="depositAmount" type="number" min="1" placeholder="Amount">
+          <button onclick="deposit()">Deposit</button>
+        </div>
+
+        <div class="wallet-box">
+          <h2>Withdrawal</h2>
+          <p style="color:#8fa2b3;font-size:13px;margin-top:5px">
+            Remove demo funds from your balance.
+          </p>
+          <input id="withdrawAmount" type="number" min="1" placeholder="Amount">
+          <button onclick="withdraw()">Withdraw</button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PROFILE -->
+    <section class="page" id="profile">
+      <div class="section">
+        <h2>Profile</h2>
+
+        <div class="profile-row">
+          <div class="profile-label">Name</div>
+          <div id="profileName">Trader</div>
+        </div>
+
+        <div class="profile-row">
+          <div class="profile-label">Email</div>
+          <div id="profileEmail">-</div>
+        </div>
+
+        <div class="profile-row">
+          <div class="profile-label">Account Type</div>
+          <div>Demo Trading Account</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-
-
-<!-- DASHBOARD -->
-<section class="page active" id="dashboard">
-
-<h1>Dashboard</h1>
-<p style="color:#94a3b8;margin-bottom:20px">
-Your trading overview
-</p>
-
-<div class="cards">
-
-<div class="card">
-<div class="label">Balance</div>
-<div class="value" id="balance">$10,000.00</div>
-</div>
-
-<div class="card">
-<div class="label">Available</div>
-<div class="value" id="available">$10,000.00</div>
-</div>
-
-<div class="card">
-<div class="label">Open Positions</div>
-<div class="value" id="count">0</div>
-</div>
-
-<div class="card">
-<div class="label">Today's P/L</div>
-<div class="value green">$0.00</div>
-</div>
-
-</div>
-
-
-<div class="grid">
-
-<div class="panel">
-
-<div class="paneltitle">Markets</div>
-
-<div class="market" onclick="choose('Bitcoin')">
-<div><b>Bitcoin</b><span class="symbol">BTC/USD</span></div>
-<div class="right" id="btc">$67,420</div>
-<div class="right green">+2.41%</div>
-</div>
-
-<div class="market" onclick="choose('Ethereum')">
-<div><b>Ethereum</b><span class="symbol">ETH/USD</span></div>
-<div class="right" id="eth">$2,580</div>
-<div class="right green">+1.73%</div>
-</div>
-
-<div class="market" onclick="choose('Gold')">
-<div><b>Gold</b><span class="symbol">XAU/USD</span></div>
-<div class="right" id="gold">$2,645</div>
-<div class="right green">+0.82%</div>
-</div>
-
-<div class="market">
-<div><b>EUR/USD</b><span class="symbol">Forex</span></div>
-<div class="right">1.1750</div>
-<div class="right red">-0.18%</div>
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<div class="paneltitle">Quick Trade</div>
-
-<p style="color:#94a3b8;margin-bottom:20px">
-Choose a market and place a demo order.
-</p>
-
-<button class="buy" style="width:100%" onclick="pageByName('trade')">
-BUY
-</button>
-
-<br><br>
-
-<button class="sell" style="width:100%" onclick="pageByName('trade')">
-SELL
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- MARKETS -->
-<section class="page" id="markets">
-
-<h1>Markets</h1>
-<p style="color:#94a3b8;margin-bottom:20px">
-Available demo markets
-</p>
-
-<div class="panel">
-
-<div class="market" onclick="choose('Bitcoin')">
-<div><b>Bitcoin</b><span class="symbol">BTC/USD</span></div>
-<div class="right" id="btc2">$67,420</div>
-<div class="right green">+2.41%</div>
-</div>
-
-<div class="market" onclick="choose('Ethereum')">
-<div><b>Ethereum</b><span class="symbol">ETH/USD</span></div>
-<div class="right" id="eth2">$2,580</div>
-<div class="right green">+1.73%</div>
-</div>
-
-<div class="market" onclick="choose('Gold')">
-<div><b>Gold</b><span class="symbol">XAU/USD</span></div>
-<div class="right" id="gold2">$2,645</div>
-<div class="right green">+0.82%</div>
-</div>
-
-<div class="market">
-<div><b>EUR/USD</b><span class="symbol">Forex</span></div>
-<div class="right">1.1750</div>
-<div class="right red">-0.18%</div>
-</div>
-
-</div>
-</section>
-
-
-<!-- TRADE -->
-<section class="page" id="trade">
-
-<h1>Trade</h1>
-<p style="color:#94a3b8;margin-bottom:20px">
-Demo trading terminal
-</p>
-
-<div class="tradegrid">
-
-<div class="panel">
-
-<div class="paneltitle">
-Price Chart — <span id="chartAsset">Bitcoin</span>
-</div>
-
-<div class="chart" id="chart"></div>
-
-</div>
-
-
-<div class="panel">
-
-<div class="paneltitle">Place Order</div>
-
-<select id="asset" onchange="chart()">
-<option>Bitcoin</option>
-<option>Ethereum</option>
-<option>Gold</option>
-<option>EUR/USD</option>
-</select>
-
-<div class="label">Amount</div>
-
-<input id="amount" type="number" value="100" min="1">
-
-<div class="tradebuttons">
-
-<button class="buy" onclick="trade('Buy')">BUY</button>
-<button class="sell" onclick="trade('Sell')">SELL</button>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- POSITIONS -->
-<section class="page" id="positions">
-
-<h1>Open Positions</h1>
-
-<div class="panel" style="margin-top:20px">
-
-<table>
-<thead>
-<tr>
-<th>Asset</th>
-<th>Type</th>
-<th>Amount</th>
-<th>Entry</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody id="positions"></tbody>
-
-</table>
-
-</div>
-
-</section>
-
-
-<!-- HISTORY -->
-<section class="page" id="history">
-
-<h1>Trade History</h1>
-
-<div class="panel" style="margin-top:20px">
-
-<table>
-<thead>
-<tr>
-<th>Time</th>
-<th>Asset</th>
-<th>Type</th>
-<th>Amount</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody id="history"></tbody>
-
-</table>
-
-</div>
-
-</section>
-
-
-<!-- WALLET -->
-<section class="page" id="wallet">
-
-<h1>Wallet</h1>
-
-<div class="cards" style="margin-top:20px">
-
-<div class="card">
-<div class="label">Demo Balance</div>
-<div class="value" id="walletBalance">$10,000.00</div>
-</div>
-
-</div>
-
-<div class="actions">
-
-<div class="panel">
-
-<div class="paneltitle">Deposit</div>
-
-<input id="deposit" type="number" placeholder="Amount">
-
-<button class="btn" onclick="deposit()">Deposit Demo Funds</button>
-
-</div>
-
-
-<div class="panel">
-
-<div class="paneltitle">Withdraw</div>
-
-<input id="withdraw" type="number" placeholder="Amount">
-
-<button class="btn" onclick="withdraw()">Withdraw Demo Funds</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PROFILE -->
-<section class="page" id="profile">
-
-<h1>Profile</h1>
-
-<div class="panel" style="max-width:600px;margin-top:20px">
-
-<p style="padding:15px 0;border-bottom:1px solid #20364d">
-Name: <strong id="profileName"></strong>
-</p>
-
-<p style="padding:15px 0;border-bottom:1px solid #20364d">
-Email: <strong id="profileEmail"></strong>
-</p>
-
-<p style="padding:15px 0">
-Account: <strong>Demo Trading Account</strong>
-</p>
-
-</div>
-
-</section>
-
-</main>
-</div>
-
 
 <script>
+/* =========================
+   ACCOUNT
+========================= */
 
-/* DATA */
+let user = JSON.parse(localStorage.getItem("tradeflowUser") || "null");
+let loggedIn = localStorage.getItem("tradeflowLoggedIn") === "true";
 
-let balance=10000;
-let positions=[];
-let history=[];
+let balance = Number(localStorage.getItem("tradeflowBalance") || 10000);
+let positions = JSON.parse(localStorage.getItem("tradeflowPositions") || "[]");
+let history = JSON.parse(localStorage.getItem("tradeflowHistory") || "[]");
+
+let prices = {
+  Bitcoin:65000,
+  Ethereum:3200,
+  Gold:2650,
+  "EUR/USD":1.0800
+};
+
+let selectedAsset = "Bitcoin";
+let candles = [];
 
 
-/* AUTH SCREENS */
+/* =========================
+   AUTH
+========================= */
 
-function signupScreen(){
- document.getElementById("loginBox").classList.add("hidden");
- document.getElementById("signupBox").classList.remove("hidden");
+function showCreate(){
+  document.getElementById("loginForm").style.display="none";
+  document.getElementById("createForm").style.display="block";
 }
 
-function loginScreen(){
- document.getElementById("signupBox").classList.add("hidden");
- document.getElementById("loginBox").classList.remove("hidden");
+function showLogin(){
+  document.getElementById("createForm").style.display="none";
+  document.getElementById("loginForm").style.display="block";
 }
-
-
-/* CREATE ACCOUNT */
 
 function createAccount(){
 
- const name=document.getElementById("name").value.trim();
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
+  const name=document.getElementById("createName").value.trim();
+  const email=document.getElementById("createEmail").value.trim();
+  const password=document.getElementById("createPassword").value;
 
- const msg=document.getElementById("signupMsg");
+  if(!name || !email || !password){
+    alert("Please fill in all fields.");
+    return;
+  }
 
- if(!name||!email||!password){
-  msg.className="msg error";
-  msg.textContent="Please fill in all fields.";
-  return;
- }
+  user={name,email,password};
 
- if(password.length<6){
-  msg.className="msg error";
-  msg.textContent="Password must be at least 6 characters.";
-  return;
- }
+  localStorage.setItem("tradeflowUser",JSON.stringify(user));
+  localStorage.setItem("tradeflowLoggedIn","true");
 
- const user={
-  name:name,
-  email:email,
-  password:password
- };
+  balance=10000;
+  positions=[];
+  history=[];
 
- localStorage.setItem("tradeflowUser",JSON.stringify(user));
-
- msg.className="msg success";
- msg.textContent="Account created successfully.";
-
- setTimeout(function(){
-  loginScreen();
-  document.getElementById("loginEmail").value=email;
-  document.getElementById("loginPassword").value="";
- },700);
+  saveData();
+  openApp();
 }
-
-
-/* LOGIN */
 
 function login(){
 
- const email=document.getElementById("loginEmail").value.trim();
- const password=document.getElementById("loginPassword").value;
+  const email=document.getElementById("loginEmail").value.trim();
+  const password=document.getElementById("loginPassword").value;
 
- const msg=document.getElementById("loginMsg");
+  const saved=JSON.parse(localStorage.getItem("tradeflowUser") || "null");
 
- const saved=localStorage.getItem("tradeflowUser");
+  if(!saved){
+    alert("Please create an account first.");
+    return;
+  }
 
- if(!saved){
-  msg.className="msg error";
-  msg.textContent="No account found. Create an account first.";
-  return;
- }
-
- const user=JSON.parse(saved);
-
- if(email!==user.email||password!==user.password){
-  msg.className="msg error";
-  msg.textContent="Incorrect email or password.";
-  return;
- }
-
- localStorage.setItem("tradeflowLoggedIn","true");
-
- openApp(user);
+  if(email===saved.email && password===saved.password){
+    user=saved;
+    localStorage.setItem("tradeflowLoggedIn","true");
+    openApp();
+  }else{
+    alert("Incorrect email or password.");
+  }
 }
-
-
-/* OPEN APP */
-
-function openApp(user){
-
- document.getElementById("auth").style.display="none";
- document.getElementById("app").style.display="block";
-
- document.getElementById("hello").textContent="Hello, "+user.name;
- document.getElementById("profileName").textContent=user.name;
- document.getElementById("profileEmail").textContent=user.email;
-
- chart();
- update();
-}
-
-
-/* LOGOUT */
 
 function logout(){
+  localStorage.setItem("tradeflowLoggedIn","false");
+  document.getElementById("app").style.display="none";
+  document.getElementById("auth").style.display="flex";
+}
 
- localStorage.removeItem("tradeflowLoggedIn");
+function openApp(){
 
- document.getElementById("app").style.display="none";
- document.getElementById("auth").style.display="flex";
+  if(!user) return;
 
- loginScreen();
+  document.getElementById("auth").style.display="none";
+  document.getElementById("app").style.display="block";
 
- document.getElementById("loginPassword").value="";
+  document.getElementById("hello").textContent=user.name;
+  document.getElementById("profileName").textContent=user.name;
+  document.getElementById("profileEmail").textContent=user.email;
+
+  updateUI();
+  createCandles();
+  setTimeout(drawChart,100);
 }
 
 
-/* NAVIGATION */
+/* =========================
+   NAVIGATION
+========================= */
 
-function page(id,button){
+function page(name,button){
 
- document.querySelectorAll(".page").forEach(function(x){
-  x.classList.remove("active");
- });
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
 
- document.getElementById(id).classList.add("active");
+  document.getElementById(name).classList.add("active");
 
- document.querySelectorAll(".nav").forEach(function(x){
-  x.classList.remove("active");
- });
+  document.querySelectorAll(".nav button").forEach(b=>{
+    b.classList.remove("active");
+  });
 
- if(button)button.classList.add("active");
+  if(button) button.classList.add("active");
 
- document.getElementById("sidebar").classList.remove("open");
-
- if(id==="trade")chart();
-}
-
-function pageByName(id){
-
- document.querySelectorAll(".page").forEach(function(x){
-  x.classList.remove("active");
- });
-
- document.getElementById(id).classList.add("active");
-
- if(id==="trade")chart();
+  if(name==="trade"){
+    setTimeout(drawChart,100);
+  }
 }
 
 
-/* MOBILE */
+/* =========================
+   DATA
+========================= */
 
-function menu(){
- document.getElementById("sidebar").classList.toggle("open");
+function saveData(){
+  localStorage.setItem("tradeflowBalance",balance);
+  localStorage.setItem("tradeflowPositions",JSON.stringify(positions));
+  localStorage.setItem("tradeflowHistory",JSON.stringify(history));
 }
 
 
-/* SELECT ASSET */
+/* =========================
+   UI
+========================= */
 
-function choose(asset){
+function money(value){
+  return Number(value).toLocaleString(undefined,{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
 
- document.getElementById("asset").value=asset;
+function updateUI(){
 
- document.getElementById("chartAsset").textContent=asset;
+  document.getElementById("balance").textContent=money(balance);
+  document.getElementById("available").textContent=money(balance);
+  document.getElementById("walletBalance").textContent=money(balance);
+  document.getElementById("positionCount").textContent=positions.length;
 
- pageByName("trade");
+  renderPositions();
+  renderHistory();
 
- chart();
+  document.getElementById("btc").textContent="$"+Math.round(prices.Bitcoin).toLocaleString();
+  document.getElementById("eth").textContent="$"+Math.round(prices.Ethereum).toLocaleString();
+  document.getElementById("gold").textContent="$"+Math.round(prices.Gold).toLocaleString();
+  document.getElementById("eur").textContent=prices["EUR/USD"].toFixed(4);
+
+  document.getElementById("btc2").textContent="$"+Math.round(prices.Bitcoin).toLocaleString();
+  document.getElementById("eth2").textContent="$"+Math.round(prices.Ethereum).toLocaleString();
+  document.getElementById("gold2").textContent="$"+Math.round(prices.Gold).toLocaleString();
+  document.getElementById("eur2").textContent=prices["EUR/USD"].toFixed(4);
 }
 
 
-/* CHART */
+/* =========================
+   TRADING
+========================= */
 
-function chart(){
+function changeAsset(){
 
- const asset=document.getElementById("asset").value;
+  selectedAsset=document.getElementById("asset").value;
 
- document.getElementById("chartAsset").textContent=asset;
-
- const box=document.getElementById("chart");
-
- box.innerHTML="";
-
- for(let i=0;i<55;i++){
-
-  const bar=document.createElement("div");
-
-  bar.className="bar";
-
-  bar.style.height=(20+Math.random()*75)+"%";
-
-  box.appendChild(bar);
- }
+  createCandles();
+  drawChart();
 }
-
-
-/* TRADE */
 
 function trade(type){
 
- const amount=Number(document.getElementById("amount").value);
- const asset=document.getElementById("asset").value;
+  const amount=Number(document.getElementById("amount").value);
 
- if(amount<=0){
-  alert("Enter a valid amount.");
-  return;
- }
+  if(!amount || amount<=0){
+    alert("Enter a valid trade amount.");
+    return;
+  }
 
- if(amount>balance){
-  alert("Insufficient demo balance.");
-  return;
- }
+  if(amount>balance){
+    alert("Insufficient demo balance.");
+    return;
+  }
 
- balance-=amount;
+  balance-=amount;
 
- positions.push({
-  asset:asset,
-  type:type,
-  amount:amount,
-  entry:getPrice(asset)
- });
+  positions.push({
+    asset:selectedAsset,
+    type:type,
+    amount:amount,
+    price:prices[selectedAsset],
+    time:new Date().toLocaleTimeString()
+  });
 
- history.unshift({
-  time:new Date().toLocaleTimeString(),
-  asset:asset,
-  type:type,
-  amount:amount
- });
+  history.unshift({
+    asset:selectedAsset,
+    type:type,
+    amount:amount,
+    time:new Date().toLocaleTimeString()
+  });
 
- update();
+  saveData();
+  updateUI();
 
- alert(type+" order placed successfully.");
+  alert(type+" order placed for $"+money(amount));
+}
+
+function renderPositions(){
+
+  const table=document.getElementById("positionsTable");
+  table.innerHTML="";
+
+  document.getElementById("noPositions").style.display=
+    positions.length ? "none":"block";
+
+  positions.forEach(p=>{
+
+    const row=document.createElement("tr");
+
+    row.innerHTML=`
+      <td>${p.asset}</td>
+      <td class="${p.type==="BUY"?"green":"red"}">${p.type}</td>
+      <td>$${money(p.amount)}</td>
+      <td>Open</td>
+    `;
+
+    table.appendChild(row);
+  });
+}
+
+function renderHistory(){
+
+  const table=document.getElementById("historyTable");
+  table.innerHTML="";
+
+  document.getElementById("noHistory").style.display=
+    history.length ? "none":"block";
+
+  history.forEach(h=>{
+
+    const row=document.createElement("tr");
+
+    row.innerHTML=`
+      <td>${h.asset}</td>
+      <td class="${h.type==="BUY"?"green":"red"}">${h.type}</td>
+      <td>$${money(h.amount)}</td>
+      <td>${h.time}</td>
+    `;
+
+    table.appendChild(row);
+  });
 }
 
 
-/* PRICE */
-
-function getPrice(asset){
-
- if(asset==="Bitcoin")return "$67,420";
- if(asset==="Ethereum")return "$2,580";
- if(asset==="Gold")return "$2,645";
- if(asset==="EUR/USD")return "1.1750";
-
- return "148.20";
-}
-
-
-/* UPDATE */
-
-function update(){
-
- const money="$"+balance.toLocaleString(undefined,{
-  minimumFractionDigits:2,
-  maximumFractionDigits:2
- });
-
- document.getElementById("balance").textContent=money;
- document.getElementById("available").textContent=money;
- document.getElementById("walletBalance").textContent=money;
-
- document.getElementById("count").textContent=positions.length;
-
-
- document.getElementById("positions").innerHTML=
- positions.length?
- positions.map(function(p){
-  return `
-  <tr>
-   <td>${p.asset}</td>
-   <td>${p.type}</td>
-   <td>$${p.amount.toFixed(2)}</td>
-   <td>${p.entry}</td>
-   <td class="green">Open</td>
-  </tr>`;
- }).join("")
- :
- `<tr><td colspan="5">No open positions</td></tr>`;
-
-
- document.getElementById("history").innerHTML=
- history.length?
- history.map(function(h){
-  return `
-  <tr>
-   <td>${h.time}</td>
-   <td>${h.asset}</td>
-   <td>${h.type}</td>
-   <td>$${h.amount.toFixed(2)}</td>
-   <td class="green">Executed</td>
-  </tr>`;
- }).join("")
- :
- `<tr><td colspan="5">No trades yet</td></tr>`;
-}
-
-
-/* WALLET */
+/* =========================
+   WALLET
+========================= */
 
 function deposit(){
 
- const amount=Number(document.getElementById("deposit").value);
-
- if(amount<=0){
-  alert("Enter a valid amount.");
-  return;
- }
-
- balance+=amount;
-
- document.getElementById("deposit").value="";
-
- update();
-
- alert("Demo funds added.");
-}
-
-
-function withdraw(){
-
- const amount=Number(document.getElementById("withdraw").value);
-
- if(amount<=0){
-  alert("Enter a valid amount.");
-  return;
- }
-
- if(amount>balance){
-  alert("Insufficient balance.");
-  return;
- }
-
- balance-=amount;
-
- document.getElementById("withdraw").value="";
-
- update();
-
- alert("Demo funds withdrawn.");
-}
-
-
-/* DEMO PRICE MOVEMENT */
-
-setInterval(function(){
-
- let btc=67420+Math.random()*500-250;
- let eth=2580+Math.random()*40-20;
- let gold=2645+Math.random()*20-10;
-
- document.getElementById("btc").textContent=
- "$"+Math.round(btc).toLocaleString();
-
- document.getElementById("eth").textContent=
- "$"+Math.round(eth).toLocaleString();
-
- document.getElementById("gold").textContent=
- "$"+Math.round(gold).toLocaleString();
-
- document.getElementById("btc2").textContent=
- "$"+Math.round(btc).toLocaleString();
-
- document.getElementById("eth2").textContent=
- "$"+Math.round(eth).toLocaleString();
-
- document.getElementById("gold2").textContent=
- "$"+Math.round(gold).toLocaleString();
-
-},3000);
-
-
-/* AUTO LOGIN AFTER REFRESH */
-
-window.onload=function(){
-
- const saved=localStorage.getItem("tradeflowUser");
- const logged=localStorage.getItem("tradeflowLoggedIn");
-
- if(saved&&logged==="true"){
-  openApp(JSON.parse(saved));
- }
-
-};
-
-</script>
-
-</body>
-    </html>
+  c
